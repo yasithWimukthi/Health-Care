@@ -55,4 +55,16 @@
         app:layout_constraintTop_toBottomOf="@+id/password_edit_text"
         app:loaderColor="@android:color/white" />
 
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/sign_up_btn_text"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
