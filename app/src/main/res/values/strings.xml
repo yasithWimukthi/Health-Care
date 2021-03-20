@@ -21,4 +21,8 @@
     <string name="add_time">Add Time</string>
     <string name="available_times">Available Times</string>
     <string name="sign_up">Sign Up</string>
+    <string name="appointments">Appointments</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
 </resources>
