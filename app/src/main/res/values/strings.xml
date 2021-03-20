@@ -14,9 +14,36 @@
     <string name="address">Address</string>
     <string name="specilization">Specilization</string>
     <string name="hospital">Hospital</string>
-    <string name="available_time" >Available Time</string>
+    <string name="available_time">Available Time</string>
     <string name="time_from">Time From</string>
     <string name="time_to">Time To</string>
     <string name="location">Location</string>
     <string name="add_time">Add Time</string>
+
+    <string name="pre_sendtitle">Send Prescription</string>
+    <string name="pre_send_username">Enter username</string>
+    <string name="pre_send_address">Enter Address</string>
+    <string name="pre_send_description">Enter Description</string>
+    <string name="per_send_btn">Send</string>
+    <string name="img_title">Add Image here</string>
+    <string name="pre_update_title">Update Info</string>
+    <string name="pre_update_username">change username</string>
+    <string name="pre_update_address">Change Address</string>
+    <string name="pre_update_description">New description</string>
+    <string name="pre_update_btn">Update</string>
+    <string name="per_update_img_name">prescription.jpg</string>
+    <string name="prev_title">Past Prescription</string>
+    <string name="add_phar_name">ABC Pharmacy</string>
+    <string name="phar_adderess">Kottawa</string>
+    <string name="phar_per_delete">Delete</string>
+    <string name="new_pharmacy">New Pharmacy</string>
+    <string name="past_per_date">2021/1/7</string>
+    <string name="Avail_phar_title">ABC Pharmacy ,Kottawa </string>
+    <string name="avail_phar_availbility">Available</string>
+    <string name="avail_phar_title">Available pharmacies</string>
+
+
+
+
+
 </resources>
