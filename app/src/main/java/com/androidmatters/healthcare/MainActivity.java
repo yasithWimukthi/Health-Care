@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                             loginButton.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
                                 @Override
                                 public void onAnimationStopEnd() {
-                                    Intent intent = new Intent(getBaseContext(), EditDoctor.class);
+                                    Intent intent = new Intent(getBaseContext(), AvailableTime.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                     startActivity(intent);
                                 }
