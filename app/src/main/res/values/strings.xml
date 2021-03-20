@@ -5,4 +5,13 @@
     <string name="login_text">LOGIN</string>
     <string name="sign_up_btn_text">CREATE NEW ACCOUNT</string>
     <string name="login_btn_load_color">white</string>
+    <string name="doctor_name">DOCTOR NAME</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="description">Description</string>
+    <string name="update">Update</string>
+    <string name="address">Address</string>
+    <string name="specilization">Specilization</string>
+    <string name="hospital">Hospital</string>
 </resources>
