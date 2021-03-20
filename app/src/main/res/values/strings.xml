@@ -20,4 +20,5 @@
     <string name="location">Location</string>
     <string name="add_time">Add Time</string>
     <string name="available_times">Available Times</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
