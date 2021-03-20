@@ -25,7 +25,7 @@
     <string name="pre_send_address">Enter Address</string>
     <string name="pre_send_description">Enter Description</string>
     <string name="per_send_btn">Send</string>
-    <string name="img_title">Add Image here</string>
+    <string name="img_title">Upload prescription here</string>
     <string name="pre_update_title">Update Info</string>
     <string name="pre_update_username">change username</string>
     <string name="pre_update_address">Change Address</string>
@@ -44,6 +44,9 @@
 
 
 
+
+    <string name="sign_up_confirm_pass">confirm password</string>
+    <string name="sign_up_btn">signup</string>
 
 
 </resources>
