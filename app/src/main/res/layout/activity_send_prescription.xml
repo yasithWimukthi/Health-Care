@@ -151,6 +151,7 @@
         android:backgroundTint="#191818"
         android:text="@string/img_title"
         android:textColor="#070707"
+        android:textSize="18sp"
         app:layout_anchor="@+id/constraintLayout"
         app:layout_anchorGravity="center" />
 

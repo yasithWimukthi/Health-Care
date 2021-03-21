@@ -32,7 +32,7 @@
     <string name="pre_update_description">New description</string>
     <string name="pre_update_btn">Update</string>
     <string name="per_update_img_name">prescription.jpg</string>
-    <string name="prev_title">Past Prescription</string>
+    <string name="prev_title">My Past Prescription</string>
     <string name="add_phar_name">ABC Pharmacy</string>
     <string name="phar_adderess">Kottawa</string>
     <string name="phar_per_delete">Delete</string>
@@ -47,6 +47,8 @@
 
     <string name="sign_up_confirm_pass">confirm password</string>
     <string name="sign_up_btn">signup</string>
+    <string name="phar_search">Search Pharmacy</string>
+    <string name="sign_up">Sign Up</string>
 
 
 </resources>
