@@ -9,34 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCare">
-        <activity android:name=".SignUp">
+        <activity android:name=".Prescription">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PharmacyNearMe">
-
-
-        </activity>
-        <activity android:name=".PastPrescription">
-
+        <activity android:name=".SignUp">
 
         </activity>
-        <activity android:name=".UpdatePrescriptionInfo">
-
-
-        </activity>
-        <activity android:name=".SendPrescription">
-
-        </activity>
+        <activity android:name=".PharmacyNearMe"></activity>
+        <activity android:name=".PastPrescription"></activity>
+        <activity android:name=".UpdatePrescriptionInfo"></activity>
+        <activity android:name=".SendPrescription"></activity>
         <activity android:name=".AvailableTime" />
         <activity android:name=".EditDoctor" />
         <activity android:name=".DoctorAccount" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
