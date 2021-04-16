@@ -25,4 +25,14 @@
     <string name="patient_name">Patient Name</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
+    <string name="home_welcome">Hello Tharindu</string>
+    <string name="home_appname">Health Care</string>
+    <string name="home_searchbar">Search Your Doctor</string>
+    <string name="doctor_service">Doctor Service</string>
+    <string name="doctor_service1">Doctor Service</string>
+    <string name="pharmacy_and_prescription">Pharmacy and Prescription</string>
+    <string name="upload_prescription">Upload Prescription</string>
+    <string name="quick_service">Quick Service</string>
+    <string name="call_1990">Call 1990</string>
+    <string name="ambulence_service_1990">Ambulence Service 1990</string>
 </resources>
