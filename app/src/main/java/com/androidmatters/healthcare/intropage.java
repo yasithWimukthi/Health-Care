@@ -26,7 +26,7 @@ public class intropage extends AppCompatActivity {
         setContentView(R.layout.activity_intropage);
 
         ArrayList<ScreenItem> screenItems = new ArrayList<>();
-        screenItems.add(new ScreenItem("Doctor Chanel" ,"safe chanel",R.drawable.doctor_illustration));
+        screenItems.add(new ScreenItem("Doctor Chanel" ,"safe chanel We Can Protect ",R.drawable.doctor_illustration));
         screenItems.add(new ScreenItem("Quick Services" ,"We Can Protect Your Health",R.drawable.img1));
         screenItems.add(new ScreenItem("Upload Your Prescription" ,"Just simple click to Upload",R.drawable.doctor));
         tabLayout = findViewById(R.id.tabLayout);
