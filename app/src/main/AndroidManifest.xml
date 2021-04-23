@@ -18,6 +18,7 @@
         <activity android:name=".AvailableTime" />
         <activity android:name=".EditDoctor" />
         <activity android:name=".DoctorAccount" />
+        <activity android:name=".intropage"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
