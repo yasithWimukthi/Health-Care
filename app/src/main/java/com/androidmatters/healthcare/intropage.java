@@ -37,7 +37,7 @@ public class intropage extends AppCompatActivity {
         finishedbtns.setVisibility(View.INVISIBLE);
 
         ArrayList<ScreenItem> screenItems = new ArrayList<>();
-        screenItems.add(new ScreenItem("Doctor Chanel" ,"safe chanel We Can Protect ",R.drawable.doctor_illustration));
+        screenItems.add(new ScreenItem("Doctor Channel" ,"Doctor just a click away",R.drawable.doctor_illustration));
         screenItems.add(new ScreenItem("Quick Services" ,"We Can Protect Your Health",R.drawable.img1));
         screenItems.add(new ScreenItem("Upload Your Prescription" ,"Just simple click to Upload",R.drawable.doctor));
         tabLayout = findViewById(R.id.tabLayout);
