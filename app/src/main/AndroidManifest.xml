@@ -11,18 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCare">
-        <activity android:name=".signUpUi"></activity>
-        <activity android:name=".login" />
-        <activity android:name=".Intial_layout" />
-        <activity android:name=".home" />
+        <activity android:name=".home"></activity>
         <activity android:name=".AppointmentList" />
         <activity android:name=".DoctorSignUp" />
         <activity android:name=".AvailableTimeList" />
         <activity android:name=".AvailableTime" />
         <activity android:name=".EditDoctor" />
         <activity android:name=".DoctorAccount" />
-        <activity android:name=".intropage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".intropage"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
