@@ -1,6 +1,7 @@
 package com.androidmatters.healthcare;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class login extends AppCompatActivity {
     private Button loginBtn;
@@ -93,7 +99,21 @@ public class login extends AppCompatActivity {
 
                             userCollection
                                     .whereEqualTo("userId",currentUid)
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                            if(!value.isEmpty()){
+                                                loginProgressBar.setVisibility(View.INVISIBLE);
+                                                for(QueryDocumentSnapshot snapshot : value){
+                                                    CurrentUser currentUser = CurrentUser.getInstance();
+                                                    currentUser.setUsername(snapshot.getString("username"));
+                                                    currentUser.setUserId(snapshot.getString("userId"));
 
+                                                    //todo create intent to navigate after login
+                                                }
+                                            }
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
