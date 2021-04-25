@@ -91,7 +91,8 @@ public class login extends AppCompatActivity {
                             assert user != null;
                             String currentUid = user.getUid();
 
-
+                            userCollection
+                                    .whereEqualTo("userId",currentUid)
 
                         }
                     })
