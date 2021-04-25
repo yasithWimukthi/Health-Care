@@ -2,7 +2,9 @@ package com.androidmatters.healthcare;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,12 +24,24 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Loginbtn = findViewById(R.id.logbtn);
-        signUp = findViewById(R.id.signbtn);
+        signUp = findViewById(R.id.redirect_sign_up);
         userEmail = findViewById(R.id.Uemail);
         Upassword = findViewById(R.id.Upassword);
 
-        LoginAnimation();
 
+        //redirect to sign up page
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(login.this,signUpUi.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        //redirect to sign up page end
+
+        //animation page called
+        LoginAnimation();
 
     }
 

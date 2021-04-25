@@ -80,13 +80,13 @@
         android:background="@drawable/buttontype02"
         android:text="@string/login_text"
         app:backgroundTint="@android:color/holo_blue_dark"
-        app:layout_constraintBottom_toTopOf="@+id/signbtn"
+        app:layout_constraintBottom_toTopOf="@+id/redirect_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/signbtn"
+        android:id="@+id/redirect_sign_up"
         android:layout_width="282dp"
         android:layout_height="54dp"
         android:layout_marginStart="64dp"
