@@ -1,16 +1,53 @@
 package com.androidmatters.healthcare;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class signUpUi extends AppCompatActivity {
-    Button redirect_logins;
+
+    private Button redirectToLogin;
+    private Button signUpBtn;
+    private ProgressBar signUpProgressBar;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseUser currentUser;
+
+    // FIRESTORE CONNECTION
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private CollectionReference collectionReference = db.collection("Users");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,10 +56,40 @@ public class signUpUi extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_up_ui);
 
+        redirectToLogin = findViewById(R.id.redirect_login);
+        signUpBtn = findViewById(R.id.signUpBtn);
+        signUpProgressBar = findViewById(R.id.signUpProgressBar);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
 
-        redirect_logins = findViewById(R.id.redirect_login);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        redirect_logins.setOnClickListener(new View.OnClickListener() {
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+
+                if(currentUser != null){
+                    //todo already logged in
+                }else{
+
+                }
+            }
+        };
+
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(
+                        !TextUtils.isEmpty(emailEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(passwordEditText.getText().toString().trim())
+                ){
+                    createUserAccount(emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim());
+                }
+            }
+        });
+
+        redirectToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(signUpUi.this,login.class);
@@ -31,5 +98,69 @@ public class signUpUi extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void createUserAccount(String email, String password) {
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            signUpProgressBar.setVisibility(View.VISIBLE);
+
+            firebaseAuth.createUserWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                currentUser = firebaseAuth.getCurrentUser();
+                                assert currentUser != null;
+                                String currentUserId = currentUser.getUid();
+
+                                //create a user map to create a user in the User collection
+                                Map<String, String> userObject = new HashMap<String, String>();
+                                userObject.put("userId",currentUserId);
+                                userObject.put("userEmail",email);
+
+                                // save to firestore DB
+                                collectionReference.add(userObject)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                documentReference.get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if(Objects.requireNonNull(task.getResult()).exists()){
+                                                                    signUpProgressBar.setVisibility(View.INVISIBLE);
+                                                                    String email = task.getResult().getString("email");
+                                                                    //String name = task.getResult().getString("username");
+
+                                                                    CurrentUser currentUser = CurrentUser.getInstance();
+                                                                    currentUser.setUserId(currentUserId);
+                                                                    currentUser.setEmail(email);
+
+                                                                    //todo navigate to home screen
+                                                                }else{
+                                                                    signUpProgressBar.setVisibility(View.VISIBLE);
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(),"Sign up failed.",Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        }else{
+            Toast.makeText(getApplicationContext(),"Please enter email and password.",Toast.LENGTH_LONG).show();
+        }
     }
 }

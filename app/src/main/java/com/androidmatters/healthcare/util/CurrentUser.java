@@ -3,6 +3,7 @@ package com.androidmatters.healthcare.util;
 public class CurrentUser {
     private String username;
     private String userId;
+    private String email;
     private static CurrentUser instance;
 
     private CurrentUser() {
@@ -29,5 +30,13 @@ public class CurrentUser {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
