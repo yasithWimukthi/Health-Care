@@ -2,14 +2,13 @@ package com.androidmatters.healthcare;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -37,7 +36,7 @@ public class intropage extends AppCompatActivity {
         finishedbtns.setVisibility(View.INVISIBLE);
 
         ArrayList<ScreenItem> screenItems = new ArrayList<>();
-        screenItems.add(new ScreenItem("Doctor Chanel" ,"safe chanel We Can Protect ",R.drawable.doctor_illustration));
+        screenItems.add(new ScreenItem("Doctor Channel" ,"Doctor just a click away",R.drawable.doctor_illustration));
         screenItems.add(new ScreenItem("Quick Services" ,"We Can Protect Your Health",R.drawable.img1));
         screenItems.add(new ScreenItem("Upload Your Prescription" ,"Just simple click to Upload",R.drawable.doctor));
         tabLayout = findViewById(R.id.tabLayout);
@@ -84,8 +83,17 @@ public class intropage extends AppCompatActivity {
 
             }
         });
+        finishedbtns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new  Intent(intropage.this,login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
+
     public void Loadbtn(){
         nextbtn.setVisibility(View.INVISIBLE);
         finishedbtns.setVisibility(View.VISIBLE);
