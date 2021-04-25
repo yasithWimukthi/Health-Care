@@ -120,6 +120,7 @@ public class login extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             loginProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(login.this,"Login failed",Toast.LENGTH_SHORT).show();
                         }
                     });
 
