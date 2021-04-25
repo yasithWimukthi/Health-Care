@@ -20,6 +20,7 @@
         <activity android:name=".DoctorAccount" />
         <activity android:name=".intropage"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".signUpUi"></activity>
         <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
