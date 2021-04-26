@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.util.CurrentUser;
@@ -38,10 +40,14 @@ public class signUpUi extends AppCompatActivity {
     private ProgressBar signUpProgressBar;
     private EditText emailEditText;
     private EditText passwordEditText;
+    private RadioButton asDoctor;
+    private RadioButton asPatient;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
+
+    private String userType;
 
     // FIRESTORE CONNECTION
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -61,6 +67,10 @@ public class signUpUi extends AppCompatActivity {
         signUpProgressBar = findViewById(R.id.signUpProgressBar);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        asDoctor = findViewById(R.id.asDoctor);
+        asPatient = findViewById(R.id.asPatient);
+
+        userType = "Patient";
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -82,9 +92,12 @@ public class signUpUi extends AppCompatActivity {
             public void onClick(View v) {
                 if(
                         !TextUtils.isEmpty(emailEditText.getText().toString().trim()) &&
-                        !TextUtils.isEmpty(passwordEditText.getText().toString().trim())
+                        !TextUtils.isEmpty(passwordEditText.getText().toString().trim()) &&
+                         passwordEditText.getText().toString().length() >= 6
                 ){
                     createUserAccount(emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim());
+                }else if(passwordEditText.getText().toString().length() < 6){
+
                 }
             }
         });
@@ -117,6 +130,7 @@ public class signUpUi extends AppCompatActivity {
                                 Map<String, String> userObject = new HashMap<String, String>();
                                 userObject.put("userId",currentUserId);
                                 userObject.put("userEmail",email);
+                                userObject.put("userType",userType);
 
                                 // save to firestore DB
                                 collectionReference.add(userObject)
@@ -161,6 +175,21 @@ public class signUpUi extends AppCompatActivity {
                     });
         }else{
             Toast.makeText(getApplicationContext(),"Please enter email and password.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onRadioButtonClicked(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.asDoctor:
+                if (checked)
+                    userType = "Doctor";
+                    break;
+            case R.id.asPatient:
+                if (checked)
+                    userType = "Patient";
+                    break;
         }
     }
 }
