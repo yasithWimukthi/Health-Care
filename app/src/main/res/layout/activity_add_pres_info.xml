@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddPresInfo">
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="411dp"
+        android:layout_height="118dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/header" />
+
+    <ScrollView
+        android:layout_width="407dp"
+        android:layout_height="553dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:drawableStart="@drawable/ic_baseline_check_24"
+                android:gravity="center"
+                android:text="Prescription Attach  Succesfully"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/pres_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName3"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/btn03style"
+                android:ems="10"
+                android:hint="Enter your City/State"
+                android:inputType="textPersonName"
+                android:paddingStart="7dp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName4"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/btn03style"
+                android:ems="10"
+                android:hint="Enter Postal code"
+                android:inputType="textPersonName"
+                android:paddingStart="7dp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName5"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/btn03style"
+                android:ems="10"
+                android:hint="Enter address"
+                android:inputType="textPersonName"
+                android:paddingStart="7dp" />
+
+            <Button
+                android:id="@+id/upload_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/buttontype02"
+                android:text="Save And Next"
+                app:backgroundTint="@android:color/holo_blue_light" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
