@@ -97,7 +97,9 @@ public class signUpUi extends AppCompatActivity {
                 ){
                     createUserAccount(emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim());
                 }else if(passwordEditText.getText().toString().length() < 6){
-
+                    Toast.makeText(getApplicationContext(),"Password should contain at least 6 characters.",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -170,7 +172,7 @@ public class signUpUi extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            Toast.makeText(getApplicationContext(),"Sign up failed.",Toast.LENGTH_LONG).show();
                         }
                     });
         }else{
