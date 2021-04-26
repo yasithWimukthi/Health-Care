@@ -78,7 +78,14 @@ public class login extends AppCompatActivity {
                 String email = userEmail.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
-                loginWithEmailAndPassword(email, password);
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && password.length()>=6){
+                    loginWithEmailAndPassword(email, password);
+                }else if(password.length()<6){
+                    Toast.makeText(getApplicationContext(),"Password should contain at least 6 characters.",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

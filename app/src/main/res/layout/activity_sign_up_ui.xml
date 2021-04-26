@@ -112,16 +112,18 @@
                 android:layout_height="match_parent"
                 android:text="As a Doctor"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:onClick="onRadioButtonClicked"/>
 
             <RadioButton
                 android:id="@+id/asPatient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="As  a Patient"
+                android:text="As a Patient"
                 android:textColor="#FDFDFD"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:onClick="onRadioButtonClicked"/>
         </RadioGroup>
 
         <TextView
