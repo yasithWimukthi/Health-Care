@@ -36,4 +36,6 @@
     <string name="call_1990">Call 1990</string>
     <string name="ambulence_service_1990">Ambulence Service 1990</string>
     <string name="next">Next</string>
+    <string name="enter_details">Enter Your Details</string>
+    <string name="save">save</string>
 </resources>
