@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sign_up_name" />
 
         <EditText
-            android:id="@+id/sign_up_mobile"
+            android:id="@+id/sign_up_specilization"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -72,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sign_up_hospital" />
 
         <EditText
-            android:id="@+id/sign_up_mobile2"
+            android:id="@+id/sign_up_mobile"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -86,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_up_mobile" />
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_specilization" />
 
         <TextView
             android:id="@+id/textView25"
