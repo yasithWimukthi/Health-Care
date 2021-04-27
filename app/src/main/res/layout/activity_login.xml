@@ -79,7 +79,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/logbtn"
+            android:id="@+id/saveBtn"
             android:layout_width="282dp"
             android:layout_height="54dp"
             android:layout_marginStart="64dp"
