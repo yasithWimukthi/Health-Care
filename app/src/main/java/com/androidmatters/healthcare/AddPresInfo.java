@@ -65,15 +65,12 @@ public class AddPresInfo extends AppCompatActivity {
                     Toast.makeText(AddPresInfo.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
                 }
                 else if(getAddress.trim().isEmpty()){
-                    Toast.makeText(AddPresInfo.this, "Please Enter  Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPresInfo.this, "Please Enter address", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     //go to the pharmacy list if no error
-
-
-
-
-
+                    Intent intent = new Intent(AddPresInfo.this,PharmacyList.class);
+                    startActivity(intent);
 
                 }
 
