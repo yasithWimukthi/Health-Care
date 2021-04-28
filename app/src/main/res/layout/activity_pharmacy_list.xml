@@ -7,14 +7,51 @@
     android:orientation="vertical"
     tools:context=".PharmacyList">
 
-    <ImageView
-        android:id="@+id/imageView9"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="124dp"
-        app:srcCompat="@drawable/header" />
+        android:layout_height="126dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pharmacy_list"
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="414dp"
+            android:layout_height="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/header" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Select Pharmacy"
+            android:textColor="#FDFDFD"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+            app:layout_constraintEnd_toEndOf="@+id/imageView9"
+            app:layout_constraintHorizontal_bias="0.06"
+            app:layout_constraintStart_toStartOf="@+id/imageView9" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="11dp"
+        android:gravity="center"
+        android:text="Select Your Nearest Pharmacy"
+        android:textColor="#424242"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <ListView
+        android:id="@+id/p_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
