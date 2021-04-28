@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.androidmatters.healthcare.util.PrescriptionBase;
 import com.squareup.picasso.Picasso;
 
 public class AddPresInfo extends AppCompatActivity {
@@ -35,10 +39,10 @@ public class AddPresInfo extends AppCompatActivity {
         phone = findViewById(R.id.pres_phone);
         address = findViewById(R.id.pres_address);
 
+
+        PrescriptionBase prescription = PrescriptionBase.getInstaceBase(); //GET SINGLETON OBJECT
         //attached prescription image
-        Intent intent = getIntent();
-        String imgurl = intent.getStringExtra("imgUrl");
-        Picasso.get().load(Uri.parse(imgurl)).centerCrop().resize(400,400).into(uploadedImage);
+        Picasso.get().load(prescription.getPres_image()).centerCrop().resize(400,400).into(uploadedImage);
 
         //animation start
         startAnimation();
@@ -69,6 +73,11 @@ public class AddPresInfo extends AppCompatActivity {
                 }
                 else{
                     //go to the pharmacy list if no error
+                    prescription.setCity(getCity);
+                    prescription.setAddress(getAddress);
+                    prescription.setPhone(getPhone);
+                    prescription.setPostalCode(getPostal);
+                    //SINGLETON OBJECT UPDATED
                     Intent intent = new Intent(AddPresInfo.this,PharmacyList.class);
                     startActivity(intent);
 
@@ -78,14 +87,6 @@ public class AddPresInfo extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
-
     }
     public void startAnimation(){
         upload_saved.setTranslationX(100);
@@ -93,7 +94,5 @@ public class AddPresInfo extends AppCompatActivity {
         upload_saved.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(400).start();
 
     }
-
-
 
 }

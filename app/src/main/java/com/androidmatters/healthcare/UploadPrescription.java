@@ -17,15 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.util.CurrentUser;
+import com.androidmatters.healthcare.util.PrescriptionBase;
 
 public class UploadPrescription extends AppCompatActivity {
     //get current user object
     CurrentUser currentUser = CurrentUser.getInstance();
     private final int PICK_IMAGE_REQUEST = 1;
     private Uri imgUrl;
-
     Button uploadimage;
     TextView Valid_pres;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,6 @@ public class UploadPrescription extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_upload_prescription);
 
-        if(currentUser == null){
-            //no user found
-        }
 
         Valid_pres = findViewById(R.id.valid_pres);
         uploadimage = findViewById(R.id.upload_img);
@@ -100,9 +98,8 @@ public class UploadPrescription extends AppCompatActivity {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             imgUrl = data.getData();
+            PrescriptionBase.getInstaceBase().setPres_image(imgUrl);
             Intent intent = new Intent(UploadPrescription.this,AddPresInfo.class);
-            String url = imgUrl.toString();
-            intent.putExtra("imgUrl",url);
             startActivity(intent);
 
         }
