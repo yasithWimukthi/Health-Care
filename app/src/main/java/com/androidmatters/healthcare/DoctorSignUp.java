@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.Model.Doctor;
@@ -16,7 +17,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DoctorSignUp extends AppCompatActivity {
@@ -26,6 +26,7 @@ public class DoctorSignUp extends AppCompatActivity {
     private EditText hospitalEditText;
     private EditText mobileEditText;
     private Button saveBtn;
+    private ProgressBar detailsEnterProgressBar;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -41,13 +42,14 @@ public class DoctorSignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_sign_up);
 
-        nameEditText = findViewById(R.id.sign_up_name);
+        nameEditText = findViewById(R.id.sign_up_first_name);
         specializationEditText = findViewById(R.id.sign_up_specilization);
         hospitalEditText = findViewById(R.id.sign_up_hospital);
         mobileEditText = findViewById(R.id.sign_up_mobile);
         saveBtn = findViewById(R.id.saveBtn);
+        detailsEnterProgressBar = findViewById(R.id.doctorDetailsEnterProgressBar);
 
-        Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,7 @@ public class DoctorSignUp extends AppCompatActivity {
                         !TextUtils.isEmpty(hospitalEditText.getText().toString().trim()) &&
                         !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
+                    detailsEnterProgressBar.setVisibility(View.VISIBLE);
                     saveDoctorDetails();
                 }else{
                     Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
@@ -78,12 +81,14 @@ public class DoctorSignUp extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        detailsEnterProgressBar.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
                     }
                 });
