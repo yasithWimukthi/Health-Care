@@ -81,7 +81,7 @@ public class DoctorSignUp extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        detailsEnterProgressBar.setVisibility(View.VISIBLE);
+                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
                     }
                 })

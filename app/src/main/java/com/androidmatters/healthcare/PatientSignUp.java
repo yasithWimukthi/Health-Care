@@ -1,5 +1,6 @@
 package com.androidmatters.healthcare;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.androidmatters.healthcare.Model.Patient;
+import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PatientSignUp extends AppCompatActivity {
@@ -62,6 +67,28 @@ public class PatientSignUp extends AppCompatActivity {
     }
 
     private void savePatient() {
+        Patient patient = new Patient();
+        patient.setFirstName(firstNameEditText.getText().toString().trim());
+        patient.setLastName(lastNameEditText.getText().toString().trim());
+        patient.setAddress(addressEditText.getText().toString().trim());
+        patient.setAge(Integer.parseInt(ageEditText.getText().toString().trim()));
+        patient.setDob(dobEditText.getText().toString().trim());
+        patient.setMobile(mobileEditText.getText().toString().trim());
 
+        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

@@ -1,6 +1,7 @@
 package com.androidmatters.healthcare.Model;
 
 public class Patient {
+    private String patientId;
     private String firstName;
     private String lastName;
     private String dob;
@@ -57,5 +58,13 @@ public class Patient {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 }
