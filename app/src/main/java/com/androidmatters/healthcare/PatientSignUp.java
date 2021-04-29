@@ -38,12 +38,14 @@ public class PatientSignUp extends AppCompatActivity {
 
         firstNameEditText = findViewById(R.id.sign_up_first_name);
         lastNameEditText = findViewById(R.id.sign_up_last_name);
-        dobEditText = findViewById(R.id.sign_up_specilization);
-        ageEditText = findViewById(R.id.sign_up_mobile);
+        dobEditText = findViewById(R.id.sign_up_dob);
+        ageEditText = findViewById(R.id.sign_up_age);
         addressEditText = findViewById(R.id.sign_up_address);
         mobileEditText = findViewById(R.id.sign_up_patient_mobile);
         patientSignUpProgressBar = findViewById(R.id.patientDetailsEnterProgressBar);
         saveButton = findViewById(R.id.patientSaveBtn);
+
+        Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
         
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
