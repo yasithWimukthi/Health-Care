@@ -49,7 +49,7 @@ public class DoctorSignUp extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveBtn);
         detailsEnterProgressBar = findViewById(R.id.doctorDetailsEnterProgressBar);
 
-        Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

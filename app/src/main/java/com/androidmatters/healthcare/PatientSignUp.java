@@ -3,10 +3,12 @@ package com.androidmatters.healthcare;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -41,11 +43,25 @@ public class PatientSignUp extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savePatient();
+                if(
+                        !TextUtils.isEmpty(firstNameEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(lastNameEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(dobEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(ageEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(addressEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
+                ){
+                    patientSignUpProgressBar.setVisibility(View.VISIBLE);
+                    savePatient();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
 
     private void savePatient() {
+
     }
 }
