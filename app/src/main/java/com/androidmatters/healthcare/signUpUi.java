@@ -170,6 +170,8 @@ public class signUpUi extends AppCompatActivity {
                             }
                             if(userType.equals("Doctor")){
                                 startActivity(new Intent(getApplicationContext(),DoctorSignUp.class));
+                            }else{
+                                startActivity(new Intent(getApplicationContext(),PatientSignUp.class));
                             }
 
                         }
