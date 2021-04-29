@@ -38,4 +38,8 @@
     <string name="next">Next</string>
     <string name="enter_details">Enter Your Details</string>
     <string name="save">save</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="age">Age</string>
 </resources>

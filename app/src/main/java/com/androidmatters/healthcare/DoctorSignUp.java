@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DoctorSignUp extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class DoctorSignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_sign_up);
 
-        nameEditText = findViewById(R.id.sign_up_name);
+        nameEditText = findViewById(R.id.sign_up_first_name);
         specializationEditText = findViewById(R.id.sign_up_specilization);
         hospitalEditText = findViewById(R.id.sign_up_hospital);
         mobileEditText = findViewById(R.id.sign_up_mobile);

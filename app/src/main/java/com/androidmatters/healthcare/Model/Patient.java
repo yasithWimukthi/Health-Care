@@ -6,6 +6,7 @@ public class Patient {
     private String dob;
     private String Address;
     private int age;
+    private String mobile;
 
     public Patient() {
     }
@@ -48,5 +49,13 @@ public class Patient {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
