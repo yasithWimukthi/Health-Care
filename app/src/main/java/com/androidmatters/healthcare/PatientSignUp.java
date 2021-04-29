@@ -76,6 +76,7 @@ public class PatientSignUp extends AppCompatActivity {
         patient.setAge(Integer.parseInt(ageEditText.getText().toString().trim()));
         patient.setDob(dobEditText.getText().toString().trim());
         patient.setMobile(mobileEditText.getText().toString().trim());
+        patient.setPatientId(CurrentUser.getInstance().getUserId());
 
         db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

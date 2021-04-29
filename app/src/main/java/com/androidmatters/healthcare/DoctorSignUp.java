@@ -76,6 +76,7 @@ public class DoctorSignUp extends AppCompatActivity {
         doctor.setHospital(hospitalEditText.getText().toString().trim());
         doctor.setMobile(mobileEditText.getText().toString().trim());
         doctor.setSpecialization(specializationEditText.getText().toString().trim());
+        doctor.setUserId(CurrentUser.getInstance().getUserId());
 
         db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
