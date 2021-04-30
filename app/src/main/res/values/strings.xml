@@ -42,4 +42,5 @@
     <string name="lastName">Last Name</string>
     <string name="dob">Date Of Birth</string>
     <string name="age">Age</string>
+    <string name="edit_doctor">Edit Details</string>
 </resources>
