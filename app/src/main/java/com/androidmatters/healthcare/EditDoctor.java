@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -11,8 +13,10 @@ import android.widget.Toast;
 
 import com.androidmatters.healthcare.Model.Doctor;
 import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -48,6 +52,47 @@ public class EditDoctor extends AppCompatActivity {
         updateButton = findViewById(R.id.updateDoctorBtn);
         updateProgressBar = findViewById(R.id.updateProgressBar);
 
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(
+                        !TextUtils.isEmpty(nameEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(hospitalEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(specializationEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
+                ){
+                    updateProgressBar.setVisibility(View.VISIBLE);
+                    updateDoctor();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
+    private void updateDoctor() {
+        Doctor doctor = new Doctor();
+        doctor.setName(nameEditText.getText().toString().trim());
+        doctor.setHospital(hospitalEditText.getText().toString().trim());
+        doctor.setSpecialization(specializationEditText.getText().toString().trim());
+        doctor.setMobile(mobileEditText.getText().toString().trim());
+
+        doctorsCollection.document(CurrentUser.getInstance().getEmail())
+                .set(doctor)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateProgressBar.setVisibility(View.INVISIBLE);
+                        //todo redirect to user profile
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Somthing went wrong. Try again.",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
@@ -77,5 +122,6 @@ public class EditDoctor extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
                     }
                 });
+
     }
 }
