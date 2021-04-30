@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCare">
-        <activity android:name=".PresOrderOverView"></activity>
+        <activity android:name=".Myprescription"></activity>
+        <activity android:name=".PresOrderOverView" />
         <activity android:name=".PharmacyList" />
         <activity android:name=".AddPresInfo" />
         <activity android:name=".UploadPrescription" />
