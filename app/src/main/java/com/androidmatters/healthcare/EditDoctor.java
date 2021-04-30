@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 public class EditDoctor extends AppCompatActivity {
 
@@ -13,6 +14,7 @@ public class EditDoctor extends AppCompatActivity {
     private EditText specializationEditText;
     private EditText mobileEditText;
     private Button updateButton;
+    private ProgressBar updateProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +26,6 @@ public class EditDoctor extends AppCompatActivity {
         specializationEditText = findViewById(R.id.updateDoctorSpecializationEditText);
         mobileEditText = findViewById(R.id.updateDoctorMobileEditText);
         updateButton = findViewById(R.id.updateDoctorBtn);
+        updateProgressBar = findViewById(R.id.updateProgressBar);
     }
 }
