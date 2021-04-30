@@ -4,9 +4,9 @@ package com.androidmatters.healthcare;
 
 public class Pharmacy{
     private String Pname;
-    private String pharmacyId;
     private String city;
     private String description;
+    private String rating;
 
     public Pharmacy() {
     }
@@ -17,14 +17,6 @@ public class Pharmacy{
 
     public void setPname(String pname) {
         Pname = pname;
-    }
-
-    public String getPharmacyId() {
-        return pharmacyId;
-    }
-
-    public void setPharmacyId(String pharmacyId) {
-        this.pharmacyId = pharmacyId;
     }
 
     public String getCity() {
@@ -41,5 +33,13 @@ public class Pharmacy{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }
