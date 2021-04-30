@@ -3,6 +3,7 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,7 +47,7 @@ public class DoctorSignUp extends AppCompatActivity {
         specializationEditText = findViewById(R.id.sign_up_specilization);
         hospitalEditText = findViewById(R.id.sign_up_hospital);
         mobileEditText = findViewById(R.id.sign_up_mobile);
-        saveBtn = findViewById(R.id.updateDoctorBtn);
+        saveBtn = findViewById(R.id.saveDoctorBtn);
         detailsEnterProgressBar = findViewById(R.id.doctorDetailsEnterProgressBar);
 
         //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
@@ -77,6 +78,7 @@ public class DoctorSignUp extends AppCompatActivity {
         doctor.setMobile(mobileEditText.getText().toString().trim());
         doctor.setSpecialization(specializationEditText.getText().toString().trim());
         doctor.setUserId(CurrentUser.getInstance().getUserId());
+        doctor.setEmail(CurrentUser.getInstance().getEmail());
 
         db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -84,6 +86,7 @@ public class DoctorSignUp extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

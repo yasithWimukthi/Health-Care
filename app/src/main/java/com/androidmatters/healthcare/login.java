@@ -52,7 +52,7 @@ public class login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loginBtn = findViewById(R.id.updateDoctorBtn);
+        loginBtn = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.redirect_sign_up);
         userEmail = findViewById(R.id.Uemail);
         passwordEditText = findViewById(R.id.Upassword);
@@ -114,7 +114,7 @@ public class login extends AppCompatActivity {
                                                     CurrentUser currentUser = CurrentUser.getInstance();
                                                     currentUser.setUsername(snapshot.getString("username"));
                                                     currentUser.setUserId(snapshot.getString("userId"));
-
+                                                    currentUser.setUserType(snapshot.getString("userType"));
                                                     //todo create intent to navigate after login
                                                 }
                                             }
