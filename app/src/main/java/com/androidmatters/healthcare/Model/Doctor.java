@@ -6,6 +6,7 @@ public class Doctor {
     private String specialization;
     private String hospital;
     private String mobile;
+    private String email;
 
     public Doctor() {
     }
@@ -48,5 +49,13 @@ public class Doctor {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

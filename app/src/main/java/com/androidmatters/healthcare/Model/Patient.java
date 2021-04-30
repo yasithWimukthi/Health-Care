@@ -8,6 +8,7 @@ public class Patient {
     private String Address;
     private int age;
     private String mobile;
+    private String email;
 
     public Patient() {
     }
@@ -66,5 +67,13 @@ public class Patient {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

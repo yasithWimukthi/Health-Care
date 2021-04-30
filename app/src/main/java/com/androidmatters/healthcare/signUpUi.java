@@ -152,6 +152,7 @@ public class signUpUi extends AppCompatActivity {
                                                                     //String name = task.getResult().getString("username");
                                                                     currentLoggedUser.setUserId(currentUserId);
                                                                     currentLoggedUser.setEmail(emailEditText.getText().toString().trim());
+                                                                    currentLoggedUser.setUserType(userType);
 
                                                                     //todo navigate to home screen
                                                                 }else{
