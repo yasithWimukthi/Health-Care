@@ -36,4 +36,14 @@
     <string name="call_1990">Call 1990</string>
     <string name="ambulence_service_1990">Ambulence Service 1990</string>
     <string name="next">Next</string>
+    <string name="enter_details">Enter Your Details</string>
+    <string name="save">save</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="age">Age</string>
+    <string name="edit_doctor">Edit Details</string>
+    <string name="confirm_text">Do you want to update?</string>
+    <string name="no_text">No</string>
+    <string name="yes_text">Yes</string>
 </resources>

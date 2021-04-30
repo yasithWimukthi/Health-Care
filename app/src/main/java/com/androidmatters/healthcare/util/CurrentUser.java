@@ -4,6 +4,7 @@ public class CurrentUser {
     private String username;
     private String userId;
     private String email;
+    private String userType;
     private static CurrentUser instance;
 
     private CurrentUser() {
@@ -38,5 +39,13 @@ public class CurrentUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

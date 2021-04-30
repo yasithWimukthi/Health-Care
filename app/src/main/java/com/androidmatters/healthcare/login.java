@@ -19,7 +19,6 @@ import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,7 +52,7 @@ public class login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loginBtn = findViewById(R.id.logbtn);
+        loginBtn = findViewById(R.id.loginBtn);
         signUp = findViewById(R.id.redirect_sign_up);
         userEmail = findViewById(R.id.Uemail);
         passwordEditText = findViewById(R.id.Upassword);
@@ -115,7 +114,7 @@ public class login extends AppCompatActivity {
                                                     CurrentUser currentUser = CurrentUser.getInstance();
                                                     currentUser.setUsername(snapshot.getString("username"));
                                                     currentUser.setUserId(snapshot.getString("userId"));
-
+                                                    currentUser.setUserType(snapshot.getString("userType"));
                                                     //todo create intent to navigate after login
                                                 }
                                             }
