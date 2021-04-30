@@ -100,7 +100,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/saveBtn"
+            android:id="@+id/updateDoctorBtn"
             android:layout_width="282dp"
             android:layout_height="54dp"
             android:layout_marginTop="16dp"

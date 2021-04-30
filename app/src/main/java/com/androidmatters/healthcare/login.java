@@ -52,7 +52,7 @@ public class login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loginBtn = findViewById(R.id.saveBtn);
+        loginBtn = findViewById(R.id.updateDoctorBtn);
         signUp = findViewById(R.id.redirect_sign_up);
         userEmail = findViewById(R.id.Uemail);
         passwordEditText = findViewById(R.id.Upassword);

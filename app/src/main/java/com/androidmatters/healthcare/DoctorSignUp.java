@@ -46,7 +46,7 @@ public class DoctorSignUp extends AppCompatActivity {
         specializationEditText = findViewById(R.id.sign_up_specilization);
         hospitalEditText = findViewById(R.id.sign_up_hospital);
         mobileEditText = findViewById(R.id.sign_up_mobile);
-        saveBtn = findViewById(R.id.saveBtn);
+        saveBtn = findViewById(R.id.updateDoctorBtn);
         detailsEnterProgressBar = findViewById(R.id.doctorDetailsEnterProgressBar);
 
         //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
