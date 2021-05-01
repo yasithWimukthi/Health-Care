@@ -49,7 +49,7 @@ public class Myprescription extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
 
                         PrescriptionBase prescriptionBase = pre_list.toObject(PrescriptionBase.class);
-                        prescriptionBase.setUsername(pre_list.getId());
+                        prescriptionBase.setDocumentId(pre_list.getId());
                         listP.add(prescriptionBase);
                     }
                     else{
@@ -71,14 +71,6 @@ public class Myprescription extends AppCompatActivity {
             }
         });
 
-
-
-
     }
-
-
-
-
-
 
 }

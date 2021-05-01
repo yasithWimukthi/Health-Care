@@ -13,6 +13,7 @@ public class PrescriptionBase {
     private String uploadedDate;
     private String Pharmacy_name;
     private String pres_image;
+    private String documentId;
     private static PrescriptionBase prescriptionBase;
 
     private PrescriptionBase(){}
@@ -25,6 +26,13 @@ public class PrescriptionBase {
         return prescriptionBase;
     }
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 
     public String getUsername() {
         return Username;
