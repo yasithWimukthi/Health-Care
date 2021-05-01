@@ -3,6 +3,7 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.androidmatters.healthcare.util.CurrentUser;
 import com.androidmatters.healthcare.util.PrescriptionBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,7 +42,7 @@ public class PresOrderOverView extends AppCompatActivity {
     private final String TAG_PRES = "tag";
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    StorageReference file = firebaseStorage.getReference("prescription");
+    //StorageReference file = firebaseStorage.getReference("prescription");
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     CollectionReference db = firebaseFirestore.collection("prescription");
     @Override
@@ -63,13 +65,12 @@ public class PresOrderOverView extends AppCompatActivity {
         String UserId = CurrentUser.getInstance().getUserId(); //GET CURRENT USER ID
         String U_email = firebaseAuth.getCurrentUser().getEmail();
 
-        //assign all values
+        //assign all values to object
         Picasso.get().load(prescriptionBase.getPres_image()).centerCrop().resize(400,400).into(imageView);
         pname.setText(prescriptionBase.getPharmacy_name());
         address.setText(prescriptionBase.getAddress());
         prescriptionBase.setUid(UserId);
         prescriptionBase.setUploadedDate(String.valueOf(Calendar.getInstance().getTime()));
-        System.out.println(Calendar.getInstance().getTime());
 
 
         //data insert
@@ -79,30 +80,47 @@ public class PresOrderOverView extends AppCompatActivity {
                 submit.setVisibility(View.INVISIBLE);
                 loading_bar.setVisibility(View.VISIBLE);
                 if(prescriptionBase.getPres_image() != null){
-                    file.child(System.currentTimeMillis()+".jpg").putFile(Uri.parse(prescriptionBase.getPres_image())).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                    StorageReference filepath = firebaseStorage.getReference().child("prescription").child(Timestamp.now().getSeconds()+"");
+                    filepath.putFile(Uri.parse(prescriptionBase.getPres_image())).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            loading_bar.setVisibility(View.INVISIBLE);
                             //now store data Firestore
-                            if(taskSnapshot.getUploadSessionUri() != null){
-                                PrescriptionBase.getInstaceBase()
-                                        .setPres_image(taskSnapshot.getUploadSessionUri().toString());
+                            filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    if(uri.toString() != null){
+                                        PrescriptionBase.getInstaceBase()
+                                                .setPres_image(uri.toString());
+                                        db.add(prescriptionBase).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                loading_bar.setVisibility(View.INVISIBLE);
+                                                Intent intent = new Intent(PresOrderOverView.this,Myprescription.class);
+                                                startActivity(intent);
+                                                finish();
+                                                Toast.makeText(PresOrderOverView.this, "Data Insert Success", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                loading_bar.setVisibility(View.INVISIBLE);
+                                                Toast.makeText(PresOrderOverView.this, "Error"+e, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        Toast.makeText(PresOrderOverView.this, "Upload failed", Toast.LENGTH_SHORT).show();
+                                    }
 
-                                db.add(prescriptionBase).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(PresOrderOverView.this, "Data Insert Success", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(PresOrderOverView.this, "Error"+e, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                            else{
-                                Log.d(TAG_PRES,"error");
-                            }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -112,15 +130,11 @@ public class PresOrderOverView extends AppCompatActivity {
                     });
                 }
                 else{
-
                     Toast.makeText(PresOrderOverView.this, "Image upload failed!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
         Animation();
-
     }
 
 
