@@ -3,8 +3,12 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,12 +35,16 @@ public class EditDoctor extends AppCompatActivity {
     private EditText mobileEditText;
     private Button updateButton;
     private ProgressBar updateProgressBar;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
+    private LayoutInflater inflater;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference;
     private CollectionReference doctorsCollection = db.collection("doctors");
 
     private Doctor currentLoggedDoctor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +69,30 @@ public class EditDoctor extends AppCompatActivity {
                         !TextUtils.isEmpty(specializationEditText.getText().toString().trim()) &&
                         !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
-                    updateProgressBar.setVisibility(View.VISIBLE);
-                    updateDoctor();
+                    // ALERT MESSAGE
+                    AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                            EditDoctor.this);
+                    alertDialog2.setTitle("Confirm Update...");
+
+                    alertDialog2.setMessage("Do you want to update details ?");
+
+                    alertDialog2.setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    updateProgressBar.setVisibility(View.VISIBLE);
+                                    updateDoctor();
+                                }
+                            });
+
+                    alertDialog2.setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alertDialog2.show();
+
                 }else{
                     Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
                 }
@@ -124,4 +154,5 @@ public class EditDoctor extends AppCompatActivity {
                 });
 
     }
+
 }
