@@ -81,7 +81,7 @@
             android:background="@drawable/login_edit_text"
             android:ems="10"
             android:hint="@string/mobile"
-            android:inputType="textPersonName"
+            android:inputType="phone"
             android:paddingLeft="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
