@@ -4,103 +4,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PresOrderOverView">
-
-    <TextView
-        android:id="@+id/successtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
-        android:text="All Are Set !"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:drawableStart="@drawable/ic_check_pres"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
+    tools:context=".PresOrderOverView" >
 
     <ImageView
-        android:id="@+id/over_pres_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:id="@+id/imageView18"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/header" />
 
-    <TextView
-        android:id="@+id/over_pname"
-        android:layout_width="385dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="340dp"
-        android:background="@drawable/btn03style"
-        android:drawableTop="@drawable/ic_local_pharmacy"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.384"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/over_address"
-        android:layout_width="385dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="84dp"
-        android:background="@drawable/btn03style"
-        android:drawableTop="@drawable/ic_location"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.384"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/over_pname"
-        app:layout_constraintVertical_bias="0.076" />
-
-    <Button
-        android:id="@+id/upload_pres"
-        android:layout_width="296dp"
-        android:layout_height="63dp"
-        android:background="@drawable/buttontype02"
-        android:text="Upload All details"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="629dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/over_address"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView18">
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="239dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/buttontype02"
-        android:text="Cancel"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/successtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="All Are Set"
+            android:textSize="30sp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        <ImageView
+            android:id="@+id/over_pres_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/over_pname"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/btn03style"
+            android:drawableStart="@drawable/ic_local_pharmacy"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/over_address"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/btn03style"
+            android:drawableStart="@drawable/ic_location"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/upload_pres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:background="@drawable/buttontype02"
+            android:text="Upload"
+            app:backgroundTint="@android:color/holo_blue_light" />
+
+        <Button
+            android:id="@+id/order_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/buttontype02"
+            android:layout_marginEnd="25dp"
+            app:backgroundTint="@android:color/holo_orange_light"
+            android:text="Cancel" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView44"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/over_address"
-        app:layout_constraintVertical_bias="0.355" />
-
+        android:layout_marginBottom="52dp"
+        android:text="Order OverView"
+        android:textColor="#FDFDFD"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView18"
+        app:layout_constraintEnd_toEndOf="@+id/imageView18"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
