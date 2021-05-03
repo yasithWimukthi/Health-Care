@@ -12,9 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCare">
 
+        <activity android:name=".ChannelList"></activity>
+        <activity android:name=".EditDoctor" />
+
+
         <activity android:name=".Myprescription"></activity>
 
         <activity android:name=".EditDoctor"></activity>
+
         <activity android:name=".PatientSignUp" />
 
         <activity android:name=".PresOrderOverView" />

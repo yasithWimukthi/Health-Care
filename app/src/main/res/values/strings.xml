@@ -46,4 +46,5 @@
     <string name="confirm_text">Do you want to update?</string>
     <string name="no_text">No</string>
     <string name="yes_text">Yes</string>
+    <string name="channel_list">Channel List</string>
 </resources>
