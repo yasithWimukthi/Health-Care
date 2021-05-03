@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,10 @@ public class PharmacyAdpater extends ArrayAdapter {
 
         TextView name = view.findViewById(R.id.phar_name);
         TextView description = view.findViewById(R.id.par_description);
-
-        name.setText(pharmaciesList.get(position).getCity());
+        ProgressBar progressBar = view.findViewById(R.id.raiting);
+        name.setText(pharmaciesList.get(position).getPname());
         description.setText(pharmaciesList.get(position).getDescription());
-
+        progressBar.setProgress(Integer.parseInt(pharmaciesList.get(position).getRating()));
 
         return view;
 

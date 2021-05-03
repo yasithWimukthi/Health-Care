@@ -98,7 +98,7 @@ public class UploadPrescription extends AppCompatActivity {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             imgUrl = data.getData();
-            PrescriptionBase.getInstaceBase().setPres_image(imgUrl);
+            PrescriptionBase.getInstaceBase().setPres_image(imgUrl.toString());
             Intent intent = new Intent(UploadPrescription.this,AddPresInfo.class);
             startActivity(intent);
 

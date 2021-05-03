@@ -12,7 +12,8 @@ public class PrescriptionBase {
     private String phone;
     private String uploadedDate;
     private String Pharmacy_name;
-    private Uri pres_image;
+    private String pres_image;
+    private String documentId;
     private static PrescriptionBase prescriptionBase;
 
     private PrescriptionBase(){}
@@ -25,6 +26,13 @@ public class PrescriptionBase {
         return prescriptionBase;
     }
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 
     public String getUsername() {
         return Username;
@@ -90,11 +98,11 @@ public class PrescriptionBase {
         Pharmacy_name = pharmacy_name;
     }
 
-    public Uri getPres_image() {
+    public String getPres_image() {
         return pres_image;
     }
 
-    public void setPres_image(Uri pres_image) {
+    public void setPres_image(String pres_image) {
         this.pres_image = pres_image;
     }
 }
