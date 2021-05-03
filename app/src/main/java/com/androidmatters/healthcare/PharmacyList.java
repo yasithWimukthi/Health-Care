@@ -72,7 +72,7 @@ public class PharmacyList extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 //when user click continue intent to new Activity
-                                                prescription.setPharmacy_name(pharmacies.get(position).getDescription());
+                                                prescription.setPharmacy_name(pharmacies.get(position).getPname());
                                                 Intent intent = new Intent(PharmacyList.this,PresOrderOverView.class);
                                                 startActivity(intent);
                                             }
