@@ -20,6 +20,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,6 +71,11 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         holder.age.setText(currentPatient[0].getAge());
         holder.mobile.setText(currentPatient[0].getMobile());
 
+        Picasso.get()
+                .load(currentPatient[0].getProfilePicture())
+                .placeholder(R.drawable.doctor_illustration)
+                .fit()
+                .into(holder.dp);
     }
 
     @Override
