@@ -9,6 +9,7 @@ public class Patient {
     private int age;
     private String mobile;
     private String email;
+    private String profilePicture;
 
     public Patient() {
     }
@@ -75,5 +76,13 @@ public class Patient {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
