@@ -58,6 +58,7 @@
         app:srcCompat="@drawable/img2" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="0dp"
         android:layout_height="600dp"
         android:layout_marginStart="8dp"
