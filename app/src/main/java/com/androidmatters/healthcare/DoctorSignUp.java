@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -132,20 +133,33 @@ public class DoctorSignUp extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        filePath.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
+                                    public void onSuccess(Uri uri) {
+                                        doctor.setProfilePicture(uri.toString());
+                                        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                                                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                                        Log.e("saveDoctorDetails", "onFailure: " + e.getMessage() );
                                     }
                                 });
                     }
