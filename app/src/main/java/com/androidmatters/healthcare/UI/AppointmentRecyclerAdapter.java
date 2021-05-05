@@ -46,7 +46,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapter.ViewHolder holder, int position) {
         Appointment appointment = appointmentList.get(position);
-        Patient[] currentPatient = new Patient[1];
+        //Patient[] currentPatient = new Patient[1];
 
         patientCollection.whereEqualTo("email", appointment.getEmail())
                 .get()
@@ -54,9 +54,19 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if(!queryDocumentSnapshots.isEmpty()){
+                            Patient currentPatient = new Patient();
                             for(QueryDocumentSnapshot patient : queryDocumentSnapshots){
-                                currentPatient[0] = patient.toObject(Patient.class);
+                                currentPatient = patient.toObject(Patient.class);
                             }
+                            holder.name.setText(currentPatient.getFirstName() + " " +currentPatient.getLastName());
+                            //holder.age.setText(currentPatient.getAge());
+                            holder.mobile.setText(currentPatient.getMobile());
+
+                            Picasso.get()
+                                    .load(currentPatient.getProfilePicture())
+                                    .placeholder(R.drawable.doctor_illustration)
+                                    .fit()
+                                    .into(holder.dp);
                         }
                     }
                 })
@@ -67,15 +77,6 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                     }
                 });
 
-        holder.name.setText(currentPatient[0].getFirstName() + " " +currentPatient[0].getLastName());
-        holder.age.setText(currentPatient[0].getAge());
-        holder.mobile.setText(currentPatient[0].getMobile());
-
-        Picasso.get()
-                .load(currentPatient[0].getProfilePicture())
-                .placeholder(R.drawable.doctor_illustration)
-                .fit()
-                .into(holder.dp);
     }
 
     @Override
