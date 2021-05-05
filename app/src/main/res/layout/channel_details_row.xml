@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView18"
+            android:id="@+id/dp"
             android:layout_width="249dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,19 +46,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mobile" />
 
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
-
-            <EditText
-                android:id="@+id/editTextPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="phone" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
