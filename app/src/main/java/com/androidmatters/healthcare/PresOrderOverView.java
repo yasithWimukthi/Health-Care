@@ -37,7 +37,7 @@ import java.util.UUID;
 public class PresOrderOverView extends AppCompatActivity {
     ImageView imageView;
     TextView SuccessTile,pname,address;
-    Button submit;
+    Button submit,order_canceled;
     ProgressBar loading_bar;
     private final String TAG_PRES = "tag";
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -58,6 +58,7 @@ public class PresOrderOverView extends AppCompatActivity {
         pname = findViewById(R.id.over_pname);
         address = findViewById(R.id.over_address);
         submit = findViewById(R.id.upload_pres);
+        order_canceled = findViewById(R.id.order_cancel);
         loading_bar = findViewById(R.id.progressBar);
         loading_bar.setVisibility(View.INVISIBLE);
 
@@ -117,7 +118,7 @@ public class PresOrderOverView extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
+                                    Toast.makeText(PresOrderOverView.this, "error"+e, Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -125,7 +126,7 @@ public class PresOrderOverView extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(PresOrderOverView.this, "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PresOrderOverView.this, "Error"+e, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -134,6 +135,17 @@ public class PresOrderOverView extends AppCompatActivity {
                 }
             }
         });
+
+        order_canceled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(PresOrderOverView.this, "Upload Canceled", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PresOrderOverView.this,UploadPrescription.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Animation();
     }
 
