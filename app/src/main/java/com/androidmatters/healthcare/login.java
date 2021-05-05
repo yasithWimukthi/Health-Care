@@ -115,6 +115,7 @@ public class login extends AppCompatActivity {
                                                     currentUser.setUsername(snapshot.getString("username"));
                                                     currentUser.setUserId(snapshot.getString("userId"));
                                                     currentUser.setUserType(snapshot.getString("userType"));
+                                                    currentUser.setProfilePicture(snapshot.getString("profilePicture"));
                                                     //todo create intent to navigate after login
                                                 }
                                             }
