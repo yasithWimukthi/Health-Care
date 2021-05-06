@@ -14,6 +14,7 @@ public class PrescriptionBase {
     private String Pharmacy_name;
     private String pres_image;
     private String documentId;
+    private String status;
     private static PrescriptionBase prescriptionBase;
 
     private PrescriptionBase(){}
@@ -24,6 +25,14 @@ public class PrescriptionBase {
             return prescriptionBase;
         }
         return prescriptionBase;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDocumentId() {

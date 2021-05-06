@@ -72,6 +72,7 @@ public class PresOrderOverView extends AppCompatActivity {
         address.setText(prescriptionBase.getAddress());
         prescriptionBase.setUid(UserId);
         prescriptionBase.setUploadedDate(String.valueOf(Calendar.getInstance().getTime()));
+        prescriptionBase.setStatus("Pending");
 
 
         //data insert

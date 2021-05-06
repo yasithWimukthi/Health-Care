@@ -6,9 +6,19 @@ public class Pharmacy{
     private String Pname;
     private String city;
     private String description;
+    private String imageUrl;
     private String rating;
 
+
     public Pharmacy() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getPname() {
