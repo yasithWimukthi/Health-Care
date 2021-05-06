@@ -140,6 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:backgroundTint="@android:color/holo_blue_dark"
             app:layout_constraintBottom_toBottomOf="@+id/doctorDp"
             app:layout_constraintEnd_toStartOf="@+id/imageView5"
             app:layout_constraintHorizontal_bias="0.5"

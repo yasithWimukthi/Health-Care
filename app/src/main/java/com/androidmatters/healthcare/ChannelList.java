@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.androidmatters.healthcare.Model.Appointment;
 import com.androidmatters.healthcare.UI.AppointmentRecyclerAdapter;
@@ -34,8 +36,11 @@ public class ChannelList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_channel_list);
-
+        
         appointmentList = new ArrayList<>();
         recyclerview = findViewById(R.id.recyclerview);
         recyclerview.setHasFixedSize(true);
