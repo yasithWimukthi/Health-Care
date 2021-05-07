@@ -39,4 +39,7 @@
     <string name="dt">dt</string>
     <string name="todo">TODO</string>
     <string name="select_a_doctor">Select a Doctor</string>
+    <string name="create_an_appointment">Create an Appointment</string>
+    <string name="Create">Create</string>
+    <string name="add_date">Add Date</string>
 </resources>
