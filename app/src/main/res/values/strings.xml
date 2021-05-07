@@ -42,4 +42,5 @@
     <string name="create_an_appointment">Create an Appointment</string>
     <string name="Create">Create</string>
     <string name="add_date">Add Date</string>
+    <string name="my_appointments">My Appointments</string>
 </resources>
