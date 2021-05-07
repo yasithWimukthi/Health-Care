@@ -85,4 +85,5 @@ public class Patient {
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
+
 }
