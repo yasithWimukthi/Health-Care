@@ -36,6 +36,7 @@ public class SelectDoctorAppointment extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_doctor_list);
         Context context;
