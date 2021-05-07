@@ -86,5 +86,4 @@ public class Patient {
         this.profilePicture = profilePicture;
     }
 
-
 }
