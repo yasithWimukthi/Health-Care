@@ -21,11 +21,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditPatient extends AppCompatActivity {
 
@@ -57,7 +61,7 @@ public class EditPatient extends AppCompatActivity {
         firstNameEditText = findViewById(R.id.updatePatientFirstName);
         lastNameEditText = findViewById(R.id.updatePatientLastName);
         dobEditText = findViewById(R.id.updatePatientDOF);
-        ageEditText = findViewById(R.id.updatePatientAge);
+        //ageEditText = findViewById(R.id.updatePatientAge);
         addressEditText = findViewById(R.id.updatePatientAddress);
         mobileEditText = findViewById(R.id.updatePatientMobile);
         updateButton = findViewById(R.id.updatePatientBtn);
@@ -70,7 +74,7 @@ public class EditPatient extends AppCompatActivity {
                         !TextUtils.isEmpty(firstNameEditText.getText().toString().trim()) &&
                                 !TextUtils.isEmpty(lastNameEditText.getText().toString().trim()) &&
                                 !TextUtils.isEmpty(dobEditText.getText().toString().trim()) &&
-                                !TextUtils.isEmpty(ageEditText.getText().toString().trim()) &&
+                                //!TextUtils.isEmpty(ageEditText.getText().toString().trim()) &&
                                 !TextUtils.isEmpty(addressEditText.getText().toString().trim()) &&
                                 !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
@@ -107,16 +111,16 @@ public class EditPatient extends AppCompatActivity {
     }
 
     private void updatePatient() {
-        Patient patient = new Patient();
-        patient.setFirstName(firstNameEditText.getText().toString().trim());
-        patient.setLastName(lastNameEditText.getText().toString().trim());
-        patient.setDob(dobEditText.getText().toString().trim());
-        patient.setAge(Integer.parseInt(ageEditText.getText().toString().trim()));
-        patient.setAddress(addressEditText.getText().toString().trim());
-        patient.setMobile(mobileEditText.getText().toString().trim());
+        Map updatePatient = new HashMap();
+        updatePatient.put("firstName", firstNameEditText.getText().toString().trim());
+        updatePatient.put("lastName", lastNameEditText.getText().toString().trim());
+        updatePatient.put("dob", dobEditText.getText().toString().trim());
+        //updatePatient.put("age", ageEditText.getText().toString().trim());
+        updatePatient.put("address", addressEditText.getText().toString().trim());
+        updatePatient.put("mobile", mobileEditText.getText().toString().trim());
 
-        patientsCollection.document(CurrentUser.getInstance().getUserId())
-                .set(patient)
+        patientsCollection.document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .update(updatePatient)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -149,7 +153,7 @@ public class EditPatient extends AppCompatActivity {
                             firstNameEditText.setText(currentLoggedPatient.getFirstName());
                             lastNameEditText.setText(currentLoggedPatient.getLastName());
                             dobEditText.setText(currentLoggedPatient.getDob());
-                            ageEditText.setText(Integer.toString(currentLoggedPatient.getAge()));
+                            //ageEditText.setText(String.valueOf(Integer.toString(currentLoggedPatient.getAge())));
                             addressEditText.setText(currentLoggedPatient.getAddress());
                             mobileEditText.setText(currentLoggedPatient.getMobile());
                         }else{
