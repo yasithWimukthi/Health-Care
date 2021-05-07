@@ -194,7 +194,6 @@ public class AppointmentCreate extends AppCompatActivity {
         savBtn.setOnClickListener(v -> {
 
             AlertDialog alertDialog = new AlertDialog.Builder(AppointmentCreate.this).create();
-            System.out.println(lock+" "+lock2);
             if(!user_data.isEmpty() && !lock && !lock2)
             {
                 alertDialog.setTitle("Confirm");
