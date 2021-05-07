@@ -52,7 +52,7 @@ public class DoctorSignUp extends AppCompatActivity {
     private StorageReference storageReference;
 
     private Uri imageUri;
-
+    CurrentUser currentLoggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,7 @@ public class DoctorSignUp extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        currentLoggedUser = CurrentUser.getInstance();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +86,7 @@ public class DoctorSignUp extends AppCompatActivity {
                         !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
                     detailsEnterProgressBar.setVisibility(View.VISIBLE);
+                    currentLoggedUser.setUsername(nameEditText.getText().toString().trim());
                     saveDoctorDetails();
                 }else{
                     Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
@@ -149,7 +151,7 @@ public class DoctorSignUp extends AppCompatActivity {
                                                     public void onSuccess(Void aVoid) {
                                                         detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                                                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-                                                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
+                                                        startActivity(new Intent(getApplicationContext(),home.class));
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

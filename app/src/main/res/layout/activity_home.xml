@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/helloText"
                 android:layout_width="152dp"
                 android:layout_height="25dp"
                 android:layout_margin="26dp"
@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.231"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/helloText" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -62,7 +62,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 app:drawableStartCompat="@drawable/ic_baseline_favorite_24"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
+                app:layout_constraintBaseline_toBaselineOf="@+id/helloText"
                 app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

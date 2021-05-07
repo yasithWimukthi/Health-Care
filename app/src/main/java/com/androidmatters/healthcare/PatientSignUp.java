@@ -47,6 +47,7 @@ public class PatientSignUp extends AppCompatActivity {
     private StorageReference storageReference;
 
     private Uri imageUri;
+    CurrentUser currentLoggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class PatientSignUp extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        currentLoggedUser = CurrentUser.getInstance();
         
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +85,7 @@ public class PatientSignUp extends AppCompatActivity {
                         !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
                     patientSignUpProgressBar.setVisibility(View.VISIBLE);
+                    currentLoggedUser.setUsername(firstNameEditText.getText().toString().trim());
                     savePatient();
                 }else{
                     Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
@@ -141,6 +144,7 @@ public class PatientSignUp extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                                                        startActivity(new Intent(getApplicationContext(),home.class));
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

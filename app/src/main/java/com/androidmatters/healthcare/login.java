@@ -118,6 +118,7 @@ public class login extends AppCompatActivity {
                                                     currentUser.setProfilePicture(snapshot.getString("profilePicture"));
                                                     //todo create intent to navigate after login
                                                 }
+                                                startActivity(new Intent(getApplicationContext(),home.class));
                                             }
                                         }
                                     });
