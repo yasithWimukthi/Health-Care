@@ -47,4 +47,7 @@
     <string name="no_text">No</string>
     <string name="yes_text">Yes</string>
     <string name="channel_list">Channel List</string>
+    <string name="bim">Calculate BMI</string>
+    <string name="height">Height</string>
+    <string name="Weight">Weight</string>
 </resources>
