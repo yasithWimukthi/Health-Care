@@ -15,8 +15,8 @@
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="0dp"
-            android:layout_height="400dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="440dp"
+            android:layout_marginTop="86dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/login_edit_text"
             android:ems="10"
@@ -37,7 +37,7 @@
             android:paddingLeft="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView5" />
+            app:layout_constraintTop_toBottomOf="@+id/doctorDp" />
 
         <EditText
             android:id="@+id/sign_up_hospital"
@@ -93,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="38dp"
+            android:fontFamily="@font/imprima"
             android:text="@string/enter_details"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -122,6 +123,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+        <ImageView
+            android:id="@+id/doctorDp"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/selectDoctorImageBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView25"
+            app:srcCompat="@drawable/doctor_illustration" />
+
+        <ImageButton
+            android:id="@+id/selectDoctorImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/doctorDp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/doctorDp"
+            app:layout_constraintTop_toTopOf="@+id/doctorDp"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 

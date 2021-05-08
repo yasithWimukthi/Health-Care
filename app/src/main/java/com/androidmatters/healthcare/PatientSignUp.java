@@ -131,17 +131,30 @@ public class PatientSignUp extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        filePath.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                                    public void onSuccess(Uri uri) {
+                                        patient.setProfilePicture(uri.toString());
+                                        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+
                                     }
                                 });
                         patientSignUpProgressBar.setVisibility(View.INVISIBLE);

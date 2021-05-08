@@ -2,11 +2,14 @@ package com.androidmatters.healthcare;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.androidmatters.healthcare.util.CurrentUser;
 import com.androidmatters.healthcare.util.PrescriptionBase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +46,29 @@ public class Myprescription extends AppCompatActivity {
         String uid = CurrentUser.getInstance().getUserId();
         System.out.println(uid);
 
+        //set selected Item
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomappnavigate);
+        bottomNavigationView.setSelectedItemId(R.id.pres);
+
+        //implement transaction
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),home.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                    case R.id.Appointment:
+                        //todo intent io the appointmentList
+                    case R.id.setting:
+                        //todo intent to the userprofile
+                }
+                return  false;
+            }
+        });
+
         db.whereEqualTo("uid",uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -62,6 +89,10 @@ public class Myprescription extends AppCompatActivity {
                 pres_list_rec.setLayoutManager(new LinearLayoutManager(Myprescription.this));
                 pres_list_rec.setHasFixedSize(true);
                 pres_list_rec.setAdapter(prescriptionAdapter);
+
+
+
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {

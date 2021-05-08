@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidmatters.healthcare.util.PrescriptionBase;
@@ -25,6 +27,8 @@ import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapter.ViewHolder> {
      private Context context;
@@ -53,17 +57,78 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.p_name.setText(this.presList.get(position).getPharmacy_name());
             holder.upload_date.setText(this.presList.get(position).getUploadedDate());
+            holder.p_status.setText(this.presList.get(position).getStatus());
+
             //System.out.println(this.presList.get(position).getPres_image());
             //Picasso.get().load(this.presList.get(position).getPres_image()).into(holder.imageView);
 
+            if(presList.get(position).getStatus().equals("Canceled")){
+                holder.removed.setVisibility(View.INVISIBLE); //IF IT IS ALREADY CANCELED
+                holder.delete.setVisibility(View.VISIBLE);
+            }
+            else{
+                holder.removed.setVisibility(View.VISIBLE);   //IF IT IS NOT CANCELED
+                holder.delete.setVisibility(View.INVISIBLE);
+            }
 
+
+//update method implementation
+            holder.removed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   AlertDialog UpdateAlet = new AlertDialog.Builder(context)
+                           .setTitle("Order Canceling")
+                           .setMessage("Are You Sure Cancel Uploaded Prescription to "+presList.get(position).getPharmacy_name())
+                           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialog, int which) {
+                                   holder.delete.setVisibility(View.VISIBLE);
+                                   holder.removed.setVisibility(View.INVISIBLE);
+                                   Map status = new HashMap<>();
+                                   status.put("status","Canceled");
+                                   ProgressDialog progressDialog = displayDialog("Please wait until it Cancel","Canceling");
+                                   progressDialog.show();
+
+                                   db.document(presList.get(position).getDocumentId()).update(status).addOnSuccessListener(new OnSuccessListener() {
+                                       @Override
+                                       public void onSuccess(Object o) {
+                                           progressDialog.dismiss();
+                                           UpdateData(position);
+                                           Toast.makeText(context, "Order Canceled Successfully", Toast.LENGTH_SHORT).show();
+
+
+
+                                       }
+                                   }).addOnFailureListener(new OnFailureListener() {
+                                       @Override
+                                       public void onFailure(@NonNull Exception e) {
+                                           progressDialog.dismiss();
+                                           Toast.makeText(context, "error"+e, Toast.LENGTH_SHORT).show();
+                                       }
+                                   });
+                               }
+                           })
+                           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialog, int which) {
+
+                               }
+                           })
+                           .create();
+                    UpdateAlet.show();
+                }
+            });
+
+
+ //delete method implementation
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     //set verification
                     AlertDialog alertDialog = new AlertDialog.Builder(context)
-                            .setTitle("Cancel Prescription ")
-                            .setMessage("Are You Sure Cancel Prescription ?")
+                            .setTitle("Delete Prescription")
+                            .setMessage("Are You Sure Delete Prescription ?")
                             .setIcon(R.drawable.ic_check_pres)
                             .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                 @Override
@@ -71,27 +136,29 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
                                     //delete image from storage
                                     storage.getReferenceFromUrl(presList.get(position).getPres_image()).delete();
                                     //when user clicked cancel button start the progressDialog
-                                    ProgressDialog progressDialog = displayDialog();
+                                    ProgressDialog progressDialog = displayDialog("Please wait until it delete","Deleting");
                                     progressDialog.show();
                                     db.document(presList.get(position).getDocumentId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             progressDialog.dismiss();
+                                            holder.delete.setVisibility(View.VISIBLE);
+                                            holder.removed.setVisibility(View.VISIBLE);
                                             removeItem(position);
                                             Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            displayDialog().dismiss();
+                                            progressDialog.dismiss();
                                             Toast.makeText(context, "Something wrong !", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            }).setNegativeButton("Keep it", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    displayDialog().dismiss();
+
                                 }
                             }).create();
                     alertDialog.show();
@@ -128,11 +195,16 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
         notifyDataSetChanged();
     }
     //display progress dialog
-    private ProgressDialog displayDialog(){
+    private ProgressDialog displayDialog(String messsage,String title){
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Deleting..");
-        progressDialog.setMessage("Please wait until delete");
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(messsage);
         return progressDialog;
+    }
+    //update arrayList
+    private void UpdateData(int position){
+         this.presList.get(position).setStatus("Canceled");
+         notifyDataSetChanged();
     }
 
     @Override
@@ -141,16 +213,18 @@ public class PrescriptionAdapter extends RecyclerView.Adapter<PrescriptionAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView p_name , upload_date;
-        Button viewdata,delete;
+        TextView p_name , upload_date,p_status;
+        Button viewdata,delete,removed;
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             p_name = itemView.findViewById(R.id.phamr_name);
+            p_status = itemView.findViewById(R.id.status);
             viewdata = itemView.findViewById(R.id.view_pres);
             upload_date = itemView.findViewById(R.id.upload_date);
             delete = itemView.findViewById(R.id.pres_delete);
+            removed = itemView.findViewById(R.id.remove);
 
         }
     }

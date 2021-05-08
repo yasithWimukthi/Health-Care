@@ -7,36 +7,30 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".signUpUi">
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="433dp"
-            android:layout_height="300dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="184dp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="0dp"
+            android:layout_height="304dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.464"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView10"
             app:srcCompat="@drawable/header" />
 
         <ImageView
             android:id="@+id/imageView10"
-            android:layout_width="257dp"
+            android:layout_width="0dp"
             android:layout_height="186dp"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintHorizontal_bias="0.415"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/doctor_illustration" />
+            app:layout_constraintTop_toBottomOf="@+id/textView25"
+            app:srcCompat="@drawable/_990224" />
 
         <EditText
             android:id="@+id/emailEditText"
@@ -131,6 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="38dp"
+            android:fontFamily="@font/imprima"
             android:text="@string/sign_up"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
