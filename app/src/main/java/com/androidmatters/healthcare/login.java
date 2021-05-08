@@ -42,6 +42,8 @@ public class login extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userCollection = db.collection("Users");
 
+    private boolean isLoginSuccess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,8 @@ public class login extends AppCompatActivity {
         userEmail = findViewById(R.id.Uemail);
         passwordEditText = findViewById(R.id.Upassword);
         loginProgressBar = findViewById(R.id.loginProgressBar);
+
+        isLoginSuccess = false;
 
         //redirect to sign up page
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +121,9 @@ public class login extends AppCompatActivity {
                                                     currentUser.setUserType(snapshot.getString("userType"));
                                                     currentUser.setProfilePicture(snapshot.getString("profilePicture"));
                                                     //todo create intent to navigate after login
+                                                    isLoginSuccess = true;
                                                 }
-                                                startActivity(new Intent(getApplicationContext(),home.class));
+
                                             }
                                         }
                                     });
@@ -135,6 +140,10 @@ public class login extends AppCompatActivity {
         }else{
             loginProgressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(login.this,"Please Enter Email And Password",Toast.LENGTH_SHORT).show();
+        }
+
+        if(isLoginSuccess){
+            startActivity(new Intent(getApplicationContext(),home.class));
         }
     }
 

@@ -176,7 +176,7 @@
             app:layout_constraintTop_toBottomOf="@+id/button3" />
 
         <Button
-            android:id="@+id/uploadP"
+            android:id="@+id/uploadPrescriprionBtn"
             android:layout_width="244dp"
             android:layout_height="49dp"
             android:layout_marginTop="12dp"
@@ -200,10 +200,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.108"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/uploadP" />
+            app:layout_constraintTop_toBottomOf="@+id/uploadPrescriprionBtn" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/callAmbulanceBtn"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginTop="16dp"
@@ -213,10 +213,10 @@
             app:layout_constraintEnd_toStartOf="@+id/button8"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bmi" />
+            app:layout_constraintTop_toBottomOf="@+id/bmiBtn" />
 
         <Button
-            android:id="@+id/bmi"
+            android:id="@+id/bmiBtn"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -235,11 +235,11 @@
             android:background="@drawable/buttontype02"
             android:text="@string/ambulence_service_1990"
             app:backgroundTint="@color/design_default_color_error"
-            app:layout_constraintBottom_toBottomOf="@+id/button7"
+            app:layout_constraintBottom_toBottomOf="@+id/callAmbulanceBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button7"
-            app:layout_constraintTop_toTopOf="@+id/button7" />
+            app:layout_constraintStart_toEndOf="@+id/callAmbulanceBtn"
+            app:layout_constraintTop_toTopOf="@+id/callAmbulanceBtn" />
 
         <Button
             android:id="@+id/bodyfit"
@@ -248,11 +248,11 @@
             android:background="@drawable/buttontype02"
             android:text="Body FIT"
             app:backgroundTint="@color/design_default_color_secondary_variant"
-            app:layout_constraintBottom_toBottomOf="@+id/bmi"
+            app:layout_constraintBottom_toBottomOf="@+id/bmiBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bmi"
-            app:layout_constraintTop_toTopOf="@+id/bmi" />
+            app:layout_constraintStart_toEndOf="@+id/bmiBtn"
+            app:layout_constraintTop_toTopOf="@+id/bmiBtn" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomappnavigate"
@@ -265,7 +265,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button7"
+            app:layout_constraintTop_toBottomOf="@+id/callAmbulanceBtn"
             app:menu="@menu/bottom_navigate"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
