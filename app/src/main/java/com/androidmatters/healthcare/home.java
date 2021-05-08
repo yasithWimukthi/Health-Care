@@ -1,20 +1,37 @@
 package com.androidmatters.healthcare;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class home extends AppCompatActivity {
 
     private TextView helloText;
+    private Button uploadPrescription;
+    private Button bmiBtn;
+    private Button callAmbulance;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference patientCollection = db.collection("patients");
+    private CollectionReference doctorCollection = db.collection("doctors");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +42,47 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         helloText = findViewById(R.id.helloText);
+        uploadPrescription =  findViewById(R.id.uploadPrescriprionBtn);
+        bmiBtn = findViewById(R.id.bmiBtn);
+        callAmbulance = findViewById(R.id.callAmbulanceBtn);
 
-        helloText.setText("Hello " + CurrentUser.getInstance().getUsername());
 
+        if(CurrentUser.getInstance().getUserType().equals("Doctor")){
+            doctorCollection
+                    .whereEqualTo("userId",CurrentUser.getInstance().getUserId())
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(!value.isEmpty()){
+                                for(QueryDocumentSnapshot snapshot : value){
+                                    helloText.setText("Hello " + snapshot.getString("name").split(" ")[0]);
+                                }
+                            }
+                        }
+                    });
+            }else{
+            patientCollection
+                    .whereEqualTo("patientId",CurrentUser.getInstance().getUserId())
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(!value.isEmpty()){
+                                for(QueryDocumentSnapshot snapshot : value){
+                                    helloText.setText("Hello " + snapshot.getString("firstName"));
+                                }
+                            }
+                        }
+                    });
+            }
+
+        callAmbulance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+"1990"));
+                startActivity(callIntent);
+            }
+        });
     }
+
 }
