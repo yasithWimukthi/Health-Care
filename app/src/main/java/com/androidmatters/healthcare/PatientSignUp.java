@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,32 +19,28 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.androidmatters.healthcare.Model.Doctor;
+import com.androidmatters.healthcare.Model.Patient;
 import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class DoctorSignUp extends AppCompatActivity {
+public class PatientSignUp extends AppCompatActivity {
 
     private static final int GALLERY_CODE = 1;
-    private EditText nameEditText;
-    private EditText specializationEditText;
-    private EditText hospitalEditText;
+    private EditText firstNameEditText;
+    private EditText lastNameEditText;
+    private EditText dobEditText;
+    private EditText ageEditText;
+    private EditText addressEditText;
     private EditText mobileEditText;
-    private Button saveBtn;
-    private ProgressBar detailsEnterProgressBar;
-    private ImageButton selectDoctor;
-    private ImageView doctorDp;
-
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
+    private ProgressBar patientSignUpProgressBar;
+    private Button saveButton;
+    private ImageButton selectPatient;
+    private ImageView patientDp;
 
     // FIRESTORE CONNECTION
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,34 +55,38 @@ public class DoctorSignUp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_doctor_sign_up);
+        setContentView(R.layout.activity_patient_sign_up);
 
-        nameEditText = findViewById(R.id.sign_up_first_name);
-        specializationEditText = findViewById(R.id.sign_up_specilization);
-        hospitalEditText = findViewById(R.id.sign_up_hospital);
-        mobileEditText = findViewById(R.id.sign_up_mobile);
-        saveBtn = findViewById(R.id.saveDoctorBtn);
-        detailsEnterProgressBar = findViewById(R.id.doctorDetailsEnterProgressBar);
-        selectDoctor = findViewById(R.id.selectDoctorImageBtn);
-        doctorDp = findViewById(R.id.doctorDp);
+        firstNameEditText = findViewById(R.id.sign_up_first_name);
+        lastNameEditText = findViewById(R.id.sign_up_last_name);
+        dobEditText = findViewById(R.id.sign_up_dob);
+        ageEditText = findViewById(R.id.sign_up_age);
+        addressEditText = findViewById(R.id.sign_up_address);
+        mobileEditText = findViewById(R.id.sign_up_patient_mobile);
+        patientSignUpProgressBar = findViewById(R.id.patientDetailsEnterProgressBar);
+        saveButton = findViewById(R.id.patientSaveBtn);
+        selectPatient = findViewById(R.id.selectPatientImageBtn);
+        patientDp = findViewById(R.id.patientDp);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
         currentLoggedUser = CurrentUser.getInstance();
-
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(
-                        !TextUtils.isEmpty(nameEditText.getText().toString().trim()) &&
-                        !TextUtils.isEmpty(specializationEditText.getText().toString().trim()) &&
-                        !TextUtils.isEmpty(hospitalEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(firstNameEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(lastNameEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(dobEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(ageEditText.getText().toString().trim()) &&
+                        !TextUtils.isEmpty(addressEditText.getText().toString().trim()) &&
                         !TextUtils.isEmpty(mobileEditText.getText().toString().trim())
                 ){
-                    detailsEnterProgressBar.setVisibility(View.VISIBLE);
-                    currentLoggedUser.setUsername(nameEditText.getText().toString().trim());
-                    saveDoctorDetails();
+                    patientSignUpProgressBar.setVisibility(View.VISIBLE);
+                    currentLoggedUser.setUsername(firstNameEditText.getText().toString().trim());
+                    savePatient();
                 }else{
                     Toast.makeText(getApplicationContext(),"Empty fields are not allowed.",Toast.LENGTH_LONG).show();
                 }
@@ -95,7 +94,7 @@ public class DoctorSignUp extends AppCompatActivity {
             }
         });
 
-        selectDoctor.setOnClickListener(new View.OnClickListener() {
+        selectPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
@@ -105,37 +104,32 @@ public class DoctorSignUp extends AppCompatActivity {
         });
     }
 
-    /**
-     *
-     *  save doctor details into the doctor collection
-     */
-    private void saveDoctorDetails() {
-        Doctor doctor = new Doctor();
-        doctor.setName(nameEditText.getText().toString().trim());
-        doctor.setHospital(hospitalEditText.getText().toString().trim());
-        doctor.setMobile(mobileEditText.getText().toString().trim());
-        doctor.setSpecialization(specializationEditText.getText().toString().trim());
-        doctor.setUserId(CurrentUser.getInstance().getUserId());
-        doctor.setEmail(CurrentUser.getInstance().getEmail());
+    private void savePatient() {
+        Patient patient = new Patient();
+        patient.setFirstName(firstNameEditText.getText().toString().trim());
+        patient.setLastName(lastNameEditText.getText().toString().trim());
+        patient.setAddress(addressEditText.getText().toString().trim());
+        patient.setAge(Integer.parseInt(ageEditText.getText().toString().trim()));
+        patient.setDob(dobEditText.getText().toString().trim());
+        patient.setMobile(mobileEditText.getText().toString().trim());
+        patient.setPatientId(CurrentUser.getInstance().getUserId());
+        patient.setEmail(CurrentUser.getInstance().getEmail());
 
-//        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
+//        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
 //                .addOnSuccessListener(new OnSuccessListener<Void>() {
 //                    @Override
 //                    public void onSuccess(Void aVoid) {
-//                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
 //                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-//                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
 //                    }
 //                })
 //                .addOnFailureListener(new OnFailureListener() {
 //                    @Override
 //                    public void onFailure(@NonNull Exception e) {
-//                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
 //                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
 //                    }
 //                });
 
-        StorageReference filePath = storageReference.child("doctors").child(CurrentUser.getInstance().getEmail());
+        StorageReference filePath = storageReference.child("patients").child(CurrentUser.getInstance().getEmail());
         filePath.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -144,12 +138,11 @@ public class DoctorSignUp extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        doctor.setProfilePicture(uri.toString());
-                                        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
+                                        patient.setProfilePicture(uri.toString());
+                                        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                                                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
                                                         startActivity(new Intent(getApplicationContext(),home.class));
                                                     }
@@ -157,7 +150,6 @@ public class DoctorSignUp extends AppCompatActivity {
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
                                                         Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
                                                     }
                                                 });
@@ -166,15 +158,16 @@ public class DoctorSignUp extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.e("saveDoctorDetails", "onFailure: " + e.getMessage() );
+
                                     }
                                 });
+                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
                     }
                 });
@@ -186,8 +179,9 @@ public class DoctorSignUp extends AppCompatActivity {
         if(requestCode == GALLERY_CODE && resultCode == RESULT_OK){
             if(data != null){
                 imageUri = data.getData();
-                doctorDp.setImageURI(imageUri);
+                patientDp.setImageURI(imageUri);
             }
         }
     }
+
 }

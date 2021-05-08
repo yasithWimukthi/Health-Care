@@ -13,11 +13,27 @@
         android:allowBackup="false">
         <activity android:name=".UploadPrescription" />
         <activity android:name=".home" />
+        android:theme="@style/Theme.HealthCare">
+
+
+
+        <activity android:name=".PatientProfile"></activity>
+        <activity android:name=".ChannelList" />
+        <activity android:name=".Myprescription" />
+        <activity android:name=".EditDoctor" />
+
+        <activity android:name=".PatientSignUp" />
+        <activity android:name=".PresOrderOverView" />
+        <activity android:name=".PharmacyList" />
+        <activity android:name=".AddPresInfo" />
+        <activity android:name=".UploadPrescription" />
+        <activity android:name=".home" >
+
+        </activity>
         <activity android:name=".AppointmentList" />
         <activity android:name=".DoctorSignUp" />
         <activity android:name=".AvailableTimeList" />
         <activity android:name=".AvailableTime" />
-        <activity android:name=".EditDoctor" />
         <activity android:name=".DoctorAccount" />
         <activity android:name=".intropage" />
         <activity android:name=".MainActivity" />

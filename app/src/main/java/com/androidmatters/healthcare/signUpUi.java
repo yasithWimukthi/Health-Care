@@ -47,6 +47,7 @@ public class signUpUi extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
+    CurrentUser currentLoggedUser;
     private String userType;
 
     // FIRESTORE CONNECTION
@@ -69,6 +70,8 @@ public class signUpUi extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         asDoctor = findViewById(R.id.asDoctor);
         asPatient = findViewById(R.id.asPatient);
+
+        currentLoggedUser = CurrentUser.getInstance();
 
         userType = "Patient";
 
@@ -147,10 +150,9 @@ public class signUpUi extends AppCompatActivity {
                                                                     signUpProgressBar.setVisibility(View.INVISIBLE);
                                                                     String email = task.getResult().getString("email");
                                                                     //String name = task.getResult().getString("username");
-
-                                                                    CurrentUser currentUser = CurrentUser.getInstance();
-                                                                    currentUser.setUserId(currentUserId);
-                                                                    currentUser.setEmail(email);
+                                                                    currentLoggedUser.setUserId(currentUserId);
+                                                                    currentLoggedUser.setEmail(emailEditText.getText().toString().trim());
+                                                                    currentLoggedUser.setUserType(userType);
 
                                                                     //todo navigate to home screen
                                                                 }else{
@@ -167,6 +169,12 @@ public class signUpUi extends AppCompatActivity {
                                             }
                                         });
                             }
+                            if(userType.equals("Doctor")){
+                                startActivity(new Intent(getApplicationContext(),DoctorSignUp.class));
+                            }else{
+                                startActivity(new Intent(getApplicationContext(),PatientSignUp.class));
+                            }
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
