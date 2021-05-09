@@ -49,6 +49,14 @@ public class PatientProfile extends AppCompatActivity {
         super.onStart();
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PatientProfile.this,home.class);
+        overridePendingTransition(-1,0);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

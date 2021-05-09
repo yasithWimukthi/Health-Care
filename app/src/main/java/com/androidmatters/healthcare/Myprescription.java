@@ -104,4 +104,12 @@ public class Myprescription extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Myprescription.this,home.class);
+        overridePendingTransition(-1,0);
+        startActivity(intent);
+        finish();
+    }
 }

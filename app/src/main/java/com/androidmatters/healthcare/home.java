@@ -5,13 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,8 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,6 +34,7 @@ public class home extends AppCompatActivity {
     private Button uploadPrescription;
     private Button bmiBtn;
     private Button callAmbulance;
+    BottomNavigationView bottomNavigationView;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference patientCollection = db.collection("patients");
@@ -86,6 +87,42 @@ public class home extends AppCompatActivity {
         bmiBtn = findViewById(R.id.bmiBtn);
         callAmbulance = findViewById(R.id.callAmbulanceBtn);
 
+        bottomNavigationView = findViewById(R.id.bottomappnavigate);
+
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.pres:
+                        startActivity(new Intent(getApplicationContext(),Myprescription.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                    case R.id.Appointment:
+                        startActivity(new Intent(getApplicationContext(),SelectDoctorAppointment.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+
+                    case R.id.setting:
+                        //todo intent to the userprofile
+                        startActivity(new Intent(getApplicationContext(),PatientProfile.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                }
+                return  false;
+            }
+        });
+        uploadPrescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this,UploadPrescription.class);
+                startActivity(intent);
+
+            }
+        });
 
         if(CurrentUser.getInstance().getUserType().equals("Doctor")){
             doctorCollection
@@ -101,7 +138,7 @@ public class home extends AppCompatActivity {
                             }
                         }
                     });
-            }else{
+        }else{
             patientCollection
                     .whereEqualTo("patientId",userId)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -114,7 +151,7 @@ public class home extends AppCompatActivity {
                             }
                         }
                     });
-            }
+        }
 
 //        callAmbulance.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -144,6 +181,7 @@ public class home extends AppCompatActivity {
                 intent.putExtra("DP", dpPath);
                 startActivity(intent);
             }
+
         });
 
     }
