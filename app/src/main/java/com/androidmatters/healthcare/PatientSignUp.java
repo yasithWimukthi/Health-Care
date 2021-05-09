@@ -144,48 +144,41 @@ public class PatientSignUp extends AppCompatActivity implements DatePickerDialog
 //                    }
 //                });
 
-        StorageReference filePath = storageReference.child("patients").child(CurrentUser.getInstance().getEmail());
-        filePath.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        filePath.getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        patient.setProfilePicture(uri.toString());
-                                        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-                                                        startActivity(new Intent(getApplicationContext(),home.class));
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+        if(imageUri != null){
+            StorageReference filePath = storageReference.child("patients").child(CurrentUser.getInstance().getEmail());
+            filePath.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            patient.setProfilePicture(uri.toString());
+                                            addPatientDetails(patient);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
 
-                                    }
-                                });
-                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                    }
-                });
+                                        }
+                                    });
+                            patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }else{
+            addPatientDetails(patient);
+        }
+
+
     }
 
     @Override
@@ -207,5 +200,22 @@ public class PatientSignUp extends AppCompatActivity implements DatePickerDialog
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String CurrentDay = DateFormat.getDateInstance().format(calendar.getTime());
         dobEditText.setText(CurrentDay);
+    }
+
+    private void addPatientDetails(Patient patient){
+        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getApplicationContext(),home.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
