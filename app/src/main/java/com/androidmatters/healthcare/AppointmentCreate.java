@@ -6,21 +6,27 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.androidmatters.healthcare.Model.Patient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +45,6 @@ public class AppointmentCreate extends AppCompatActivity {
     private FirebaseFirestore db;
     private boolean lock,lock2;
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,39 @@ public class AppointmentCreate extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_create);
+
+        //set selected Item
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomappnavigate);
+        bottomNavigationView.setSelectedItemId(R.id.Appointment);
+
+        //implement transaction
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),home.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                    case R.id.pres:
+                        startActivity(new Intent(getApplicationContext(),Myprescription.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+
+                    case R.id.setting:
+                        startActivity(new Intent(getApplicationContext(),PatientProfile.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        return true;
+                }
+                return  false;
+            }
+        });
+
+
+
 
         //get doctor data from intent
         doctorID = getIntent().getStringExtra("doctor_ID");
@@ -89,6 +127,8 @@ public class AppointmentCreate extends AppCompatActivity {
             myDate.set(Calendar.MONTH, monthOfYear);
             myDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             dat =  updateDate();
+            String CurrentDay = DateFormat.getDateInstance().format(myDate.getTime());
+            Toast.makeText(this, ""+CurrentDay, Toast.LENGTH_SHORT).show();
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate now = LocalDate.now();
@@ -115,7 +155,7 @@ public class AppointmentCreate extends AppCompatActivity {
                                  //set data if no appointment
                                 if(task1.getResult().isEmpty())
                                 {
-                                    user_data.put("date",dat);
+                                    user_data.put("date",CurrentDay);
                                     user_data.put("doctorId",doctorID);
                                     user_data.put("doctorName", docName.getText().toString().trim());
                                     user_data.put("name",name);
@@ -130,7 +170,7 @@ public class AppointmentCreate extends AppCompatActivity {
                                         {
                                             if(document.getLong("number")<20)
                                             {   long a = (document.getLong("number"));
-                                                user_data.put("date",dat);
+                                                user_data.put("date",CurrentDay);
                                                 user_data.put("doctorId",doctorID);
                                                 user_data.put("doctorName", docName.getText().toString().trim());
                                                 user_data.put("name", name);

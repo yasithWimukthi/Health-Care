@@ -97,7 +97,7 @@
             android:layout_margin="30dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/teal_700"
-            android:text="Button"
+            android:text="Calculate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/heightEditText" />
@@ -117,15 +117,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calcBmiBtn" />
-
-        <EditText
-            android:id="@+id/editTextNumberDecimal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="50dp"
-            tools:layout_editor_absoluteY="191dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

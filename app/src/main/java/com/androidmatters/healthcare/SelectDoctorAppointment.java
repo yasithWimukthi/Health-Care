@@ -33,6 +33,7 @@ public class SelectDoctorAppointment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         //remove action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -42,8 +43,6 @@ public class SelectDoctorAppointment extends AppCompatActivity {
         setContentView(R.layout.display_doctor_list);
         Context context;
         context = getBaseContext();
-
-
 
         TextView back = findViewById(R.id.backText1);
         FirebaseFirestore fStore = FirebaseFirestore.getInstance();

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidmatters.healthcare">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HealthCare">
+        <activity android:name=".Whr">
+
+        </activity>
+        <activity android:name=".AppointmentCreate"></activity>
+        <activity android:name=".ChannelList"></activity>
+        <activity android:name=".SelectDoctorAppointment"></activity>
+        <activity android:name=".PatientViewAppointments"></activity>
+        <activity android:name=".PatientProfile"></activity>
+        <activity android:name=".EditPatient"></activity>
+        <activity android:name=".Myprescription" />
+        <activity android:name=".EditDoctor" />
+        <activity android:name=".PatientSignUp" />
+        <activity android:name=".BmiActivity"></activity>
+        <activity android:name=".PresOrderOverView" />
+        <activity android:name=".PharmacyList" />
+        <activity android:name=".AddPresInfo" />
+        <activity android:name=".UploadPrescription" />
+        <activity android:name=".home" />
+        <activity android:name=".AppointmentList" />
+        <activity android:name=".DoctorSignUp" />
+        <activity android:name=".AvailableTimeList" />
+        <activity android:name=".AvailableTime" />
+        <activity android:name=".DoctorAccount" />
+        <activity android:name=".intropage" />
+        <activity android:name=".signUpUi" />
+        <activity android:name=".login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
