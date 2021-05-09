@@ -3,7 +3,9 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.Model.Patient;
+import com.androidmatters.healthcare.UI.DatePickerFragment;
 import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +32,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class PatientSignUp extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class PatientSignUp extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private static final int GALLERY_CODE = 1;
     private EditText firstNameEditText;
@@ -102,6 +109,14 @@ public class PatientSignUp extends AppCompatActivity {
                 startActivityForResult(galleryIntent,GALLERY_CODE);
             }
         });
+
+        dobEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialogFragment = new DatePickerFragment();
+                dialogFragment.show(getSupportFragmentManager(),"get date");
+            }
+        });
     }
 
     private void savePatient() {
@@ -129,48 +144,41 @@ public class PatientSignUp extends AppCompatActivity {
 //                    }
 //                });
 
-        StorageReference filePath = storageReference.child("patients").child(CurrentUser.getInstance().getEmail());
-        filePath.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        filePath.getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        patient.setProfilePicture(uri.toString());
-                                        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-                                                        startActivity(new Intent(getApplicationContext(),home.class));
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+        if(imageUri != null){
+            StorageReference filePath = storageReference.child("patients").child(CurrentUser.getInstance().getEmail());
+            filePath.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            patient.setProfilePicture(uri.toString());
+                                            addPatientDetails(patient);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
 
-                                    }
-                                });
-                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        patientSignUpProgressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                    }
-                });
+                                        }
+                                    });
+                            patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            patientSignUpProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }else{
+            addPatientDetails(patient);
+        }
+
+
     }
 
     @Override
@@ -184,4 +192,30 @@ public class PatientSignUp extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        String CurrentDay = DateFormat.getDateInstance().format(calendar.getTime());
+        dobEditText.setText(CurrentDay);
+    }
+
+    private void addPatientDetails(Patient patient){
+        db.collection("patients").document(CurrentUser.getInstance().getEmail()).set(patient)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getApplicationContext(),home.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 }

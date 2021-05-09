@@ -39,6 +39,8 @@ public class home extends AppCompatActivity {
     private CollectionReference patientCollection = db.collection("patients");
     private CollectionReference doctorCollection = db.collection("doctors");
 
+    private String dpPath = "";
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean permissionGranted = false;
@@ -73,6 +75,12 @@ public class home extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_home);
 
+        //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("EMAIL");
+        String userId = intent.getStringExtra("USER_ID");
+
         helloText = findViewById(R.id.helloText);
         uploadPrescription =  findViewById(R.id.uploadPrescriprionBtn);
         bmiBtn = findViewById(R.id.bmiBtn);
@@ -81,20 +89,21 @@ public class home extends AppCompatActivity {
 
         if(CurrentUser.getInstance().getUserType().equals("Doctor")){
             doctorCollection
-                    .whereEqualTo("userId",CurrentUser.getInstance().getUserId())
+                    .whereEqualTo("userId",userId)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             if(!value.isEmpty()){
                                 for(QueryDocumentSnapshot snapshot : value){
                                     helloText.setText("Hello " + snapshot.getString("name").split(" ")[0]);
+                                    dpPath = snapshot.getString("profilePicture");
                                 }
                             }
                         }
                     });
             }else{
             patientCollection
-                    .whereEqualTo("patientId",CurrentUser.getInstance().getUserId())
+                    .whereEqualTo("patientId",userId)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -107,22 +116,33 @@ public class home extends AppCompatActivity {
                     });
             }
 
+//        callAmbulance.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Build.VERSION.SDK_INT < 23) {
+//                    makeCall();
+//                }else {
+//                    if (ActivityCompat.checkSelfPermission(home.this,
+//                            Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+//
+//                        makeCall();
+//                    }else {
+//                        final String[] PERMISSIONS_STORAGE = {Manifest.permission.CALL_PHONE};
+//                        //Asking request Permissions
+//                        ActivityCompat.requestPermissions(home.this, PERMISSIONS_STORAGE, 9);
+//                    }
+//                }
+//            }
+//        });
+
         callAmbulance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT < 23) {
-                    makeCall();
-                }else {
-                    if (ActivityCompat.checkSelfPermission(home.this,
-                            Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-
-                        makeCall();
-                    }else {
-                        final String[] PERMISSIONS_STORAGE = {Manifest.permission.CALL_PHONE};
-                        //Asking request Permissions
-                        ActivityCompat.requestPermissions(home.this, PERMISSIONS_STORAGE, 9);
-                    }
-                }
+                Intent intent = new Intent(getApplicationContext(), DoctorAccount.class);
+                intent.putExtra("EMAIL_TO_DOCTOR", email);
+                intent.putExtra("USER_ID_TO_DOCTOR", userId);
+                intent.putExtra("DP", dpPath);
+                startActivity(intent);
             }
         });
 
