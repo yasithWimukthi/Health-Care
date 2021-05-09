@@ -73,7 +73,7 @@ public class DoctorSignUp extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        //Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),CurrentUser.getInstance().getEmail(),Toast.LENGTH_LONG).show();
         currentLoggedUser = CurrentUser.getInstance();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {

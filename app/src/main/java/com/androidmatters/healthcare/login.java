@@ -43,6 +43,7 @@ public class login extends AppCompatActivity {
     private CollectionReference userCollection = db.collection("Users");
 
     private boolean isLoginSuccess;
+    CurrentUser currentUser = CurrentUser.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +116,21 @@ public class login extends AppCompatActivity {
                                             if(!value.isEmpty()){
                                                 loginProgressBar.setVisibility(View.INVISIBLE);
                                                 for(QueryDocumentSnapshot snapshot : value){
-                                                    CurrentUser currentUser = CurrentUser.getInstance();
+
                                                     currentUser.setUsername(snapshot.getString("username"));
                                                     currentUser.setUserId(snapshot.getString("userId"));
                                                     currentUser.setUserType(snapshot.getString("userType"));
                                                     currentUser.setProfilePicture(snapshot.getString("profilePicture"));
                                                     //todo create intent to navigate after login
                                                     isLoginSuccess = true;
+//                                                    startActivity(new Intent(getApplicationContext(),DoctorAccount.class));
+                                                    //startActivity(new Intent(getApplicationContext(),home.class));
+                                                    Intent intent = new Intent(getApplicationContext(), home.class);
+                                                    intent.putExtra("EMAIL", userEmail.getText().toString().trim());
+                                                    intent.putExtra("USER_ID", currentUid);
+                                                    startActivity(intent);
+
+                                                    Toast.makeText(getApplicationContext(),snapshot.getString("userId"),Toast.LENGTH_LONG).show();
                                                 }
 
                                             }
@@ -142,9 +151,9 @@ public class login extends AppCompatActivity {
             Toast.makeText(login.this,"Please Enter Email And Password",Toast.LENGTH_SHORT).show();
         }
 
-        if(isLoginSuccess){
-            startActivity(new Intent(getApplicationContext(),home.class));
-        }
+//        if(isLoginSuccess){
+//            startActivity(new Intent(getApplicationContext(),DoctorAccount.class));
+//        }
     }
 
 

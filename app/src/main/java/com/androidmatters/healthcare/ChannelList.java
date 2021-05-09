@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +34,9 @@ public class ChannelList extends AppCompatActivity {
     private RecyclerView recyclerview;
     private AppointmentRecyclerAdapter appointmentRecyclerAdapter;
 
+    private String email = "";
+    private String date = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,10 @@ public class ChannelList extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_channel_list);
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra("DOCTOR_EMAIL");
+        date = intent.getStringExtra("DATE");
         
         appointmentList = new ArrayList<>();
         recyclerview = findViewById(R.id.recyclerview);
@@ -50,7 +58,9 @@ public class ChannelList extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        appointmentCollection.whereEqualTo("date","2021-02-05")
+        appointmentCollection
+                .whereEqualTo("date","21-05-2021")
+                .whereEqualTo("doctorId",email)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
