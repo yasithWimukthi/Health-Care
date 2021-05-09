@@ -154,6 +154,53 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
             }
         });
 
+        deleteProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                        DoctorAccount.this);
+                alertDialog2.setTitle("Confirm Delete...");
+
+                alertDialog2.setMessage("Do you want to delete account ?");
+
+                alertDialog2.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                user.delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                startActivity(new Intent(getApplicationContext(),intropage.class));
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(),"Something went wrong. Try again !",Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                            }
+                        });
+
+                alertDialog2.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                alertDialog2.show();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                startActivity(new Intent(getApplicationContext(),login.class));
+            }
+        });
+
     }
 
     @Override
