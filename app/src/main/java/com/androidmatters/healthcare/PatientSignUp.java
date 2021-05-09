@@ -3,7 +3,9 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.Model.Patient;
+import com.androidmatters.healthcare.UI.DatePickerFragment;
 import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +32,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class PatientSignUp extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class PatientSignUp extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private static final int GALLERY_CODE = 1;
     private EditText firstNameEditText;
@@ -100,6 +107,14 @@ public class PatientSignUp extends AppCompatActivity {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent,GALLERY_CODE);
+            }
+        });
+
+        dobEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialogFragment = new DatePickerFragment();
+                dialogFragment.show(getSupportFragmentManager(),"get date");
             }
         });
     }
@@ -184,4 +199,13 @@ public class PatientSignUp extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        String CurrentDay = DateFormat.getDateInstance().format(calendar.getTime());
+        dobEditText.setText(CurrentDay);
+    }
 }

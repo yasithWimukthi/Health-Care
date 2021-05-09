@@ -3,8 +3,10 @@ package com.androidmatters.healthcare;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,11 +17,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.Model.Doctor;
+import com.androidmatters.healthcare.UI.DatePickerFragment;
 import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,10 +37,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DoctorAccount extends AppCompatActivity {
+public class DoctorAccount extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private ImageView profilePicture;
     private ImageView imagePicker;
@@ -130,6 +136,14 @@ public class DoctorAccount extends AppCompatActivity {
             }
         });
 
+        appointmentDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialogFragment = new DatePickerFragment();
+                dialogFragment.show(getSupportFragmentManager(),"get date");
+            }
+        });
+
     }
 
     @Override
@@ -184,4 +198,13 @@ public class DoctorAccount extends AppCompatActivity {
                 .into(profilePicture);
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        String CurrentDay = DateFormat.getDateInstance().format(calendar.getTime());
+        appointmentDate.setText(CurrentDay);
+    }
 }
