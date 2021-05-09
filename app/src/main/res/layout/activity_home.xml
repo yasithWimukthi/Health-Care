@@ -210,7 +210,7 @@
             android:background="@drawable/buttontype02"
             android:text="@string/call_1990"
             app:backgroundTint="@android:color/holo_blue_dark"
-            app:layout_constraintEnd_toStartOf="@+id/button8"
+            app:layout_constraintEnd_toStartOf="@+id/callCovidBtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bmiBtn" />
@@ -229,11 +229,11 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/callCovidBtn"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:background="@drawable/buttontype02"
-            android:text="@string/ambulence_service_1990"
+            android:text="@string/callCovid"
             app:backgroundTint="@color/design_default_color_error"
             app:layout_constraintBottom_toBottomOf="@+id/callAmbulanceBtn"
             app:layout_constraintEnd_toEndOf="parent"

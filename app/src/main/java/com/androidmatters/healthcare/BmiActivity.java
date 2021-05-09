@@ -36,7 +36,8 @@ public class BmiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(weightEditText.getText().toString().trim()) && !TextUtils.isEmpty(heightEditText.getText().toString().trim())){
-                    calculateBmi();
+                    calculateBmi(Float.parseFloat(heightEditText.getText().toString().trim()),
+                            Float.parseFloat(weightEditText.getText().toString().trim()));
                 }else{
                     Toast.makeText(getApplicationContext(),"Enter weight and height.",Toast.LENGTH_LONG).show();
                 }
@@ -44,12 +45,9 @@ public class BmiActivity extends AppCompatActivity {
         });
     }
 
-    private void calculateBmi() {
-        float height = Float.parseFloat(heightEditText.getText().toString().trim());
-        float weight = Float.parseFloat(weightEditText.getText().toString().trim());
-
+    public float calculateBmi(float height,float weight) {
         float bmi = weight/(height*height);
-
         bmiValue.setText("Your BMI value is : " + bmi);
+        return bmi;
     }
 }

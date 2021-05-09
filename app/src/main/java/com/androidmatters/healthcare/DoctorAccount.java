@@ -201,6 +201,13 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
             }
         });
 
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),EditDoctor.class));
+            }
+        });
+
     }
 
     @Override
