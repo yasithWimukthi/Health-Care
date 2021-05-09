@@ -58,9 +58,10 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
                             for(QueryDocumentSnapshot patient : queryDocumentSnapshots){
                                 currentPatient = patient.toObject(Patient.class);
                             }
-                            holder.name.setText(currentPatient.getFirstName() + " " +currentPatient.getLastName());
-                            //holder.age.setText(currentPatient.getAge());
-                            holder.mobile.setText(currentPatient.getMobile());
+                            holder.name.setText("Name : " + currentPatient.getFirstName() + " " +currentPatient.getLastName());
+                            holder.age.setText("Age : " + Integer.toString(currentPatient.getAge()));
+                            holder.mobile.setText("Mobile :" + currentPatient.getMobile());
+                            holder.number.setText("Number : " +Integer.toString(appointment.getNumber()));
 
                             Picasso.get()
                                     .load(currentPatient.getProfilePicture())
@@ -90,6 +91,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
         public TextView name;
         public TextView age;
         public TextView mobile;
+        public TextView number;
 
         public ViewHolder(View view, Context ctx) {
             super(view);
@@ -98,6 +100,7 @@ public class AppointmentRecyclerAdapter extends RecyclerView.Adapter<Appointment
             name = view.findViewById(R.id.patient_name);
             age = view.findViewById(R.id.patient_age);
             mobile = view.findViewById(R.id.patient_mobile);
+            number = view.findViewById(R.id.patient_number);
         }
     }
 }

@@ -54,6 +54,8 @@ public class DoctorSignUp extends AppCompatActivity {
     private Uri imageUri;
     CurrentUser currentLoggedUser;
 
+    private String email = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,9 @@ public class DoctorSignUp extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_doctor_sign_up);
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra("EMAIL");
 
         nameEditText = findViewById(R.id.sign_up_first_name);
         specializationEditText = findViewById(R.id.sign_up_specilization);
@@ -118,66 +123,41 @@ public class DoctorSignUp extends AppCompatActivity {
         doctor.setUserId(CurrentUser.getInstance().getUserId());
         doctor.setEmail(CurrentUser.getInstance().getEmail());
 
-//        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-//                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-//                        startActivity(new Intent(getApplicationContext(),EditDoctor.class));
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-//                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-//                    }
-//                });
+        if(imageUri != null){
+            StorageReference filePath = storageReference.child("doctors").child(CurrentUser.getInstance().getEmail());
+            filePath.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            doctor.setProfilePicture(uri.toString());
+                                            addDoctorDetails(doctor);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e("saveDoctorDetails", "onFailure: " + e.getMessage() );
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }else{
+            doctor.setProfilePicture("not added");
+            addDoctorDetails(doctor);
+        }
 
-        StorageReference filePath = storageReference.child("doctors").child(CurrentUser.getInstance().getEmail());
-        filePath.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        filePath.getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        doctor.setProfilePicture(uri.toString());
-                                        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-                                                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
-                                                        startActivity(new Intent(getApplicationContext(),home.class));
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-                                                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                                                    }
-                                                });
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("saveDoctorDetails", "onFailure: " + e.getMessage() );
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
-                    }
-                });
+
     }
 
     @Override
@@ -189,5 +169,28 @@ public class DoctorSignUp extends AppCompatActivity {
                 doctorDp.setImageURI(imageUri);
             }
         }
+    }
+
+    private void addDoctorDetails(Doctor doctor){
+        db.collection("doctors").document(CurrentUser.getInstance().getEmail()).set(doctor)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                        //Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), home.class);
+                        intent.putExtra("USER_TYPE", "Doctor");
+                        intent.putExtra("USER_NAME", nameEditText.getText().toString().trim());
+                        intent.putExtra("EMAIL", email);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        detailsEnterProgressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(),"Try Again.",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

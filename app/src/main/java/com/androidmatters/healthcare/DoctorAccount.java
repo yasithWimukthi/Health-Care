@@ -27,6 +27,8 @@ import com.androidmatters.healthcare.UI.DatePickerFragment;
 import com.androidmatters.healthcare.util.CurrentUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -53,8 +55,10 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
     private Button deleteProfile;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
     private CollectionReference doctorsCollection = db.collection("doctors");
+    FirebaseUser user ;
 
     private Doctor currentLoggedDoctor ;
     String userId ="";
@@ -77,6 +81,8 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
         userId = intent.getStringExtra("USER_ID_TO_DOCTOR");
         dpPath = intent.getStringExtra("DP");
 
+        Toast.makeText(getApplicationContext(),email,Toast.LENGTH_LONG);
+
         profilePicture = findViewById(R.id.doctor_profile_img);
         imagePicker = findViewById(R.id.doctor_image_picker);
         appointmentDate = findViewById(R.id.appointmentDate);
@@ -87,8 +93,12 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
         currentLoggedDoctor = new Doctor();
 
         storageReference = FirebaseStorage.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
-        getProfilePicture(dpPath);
+        if(!dpPath.equals("not added") ){
+            getProfilePicture(dpPath);
+        }
 
         imagePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +164,7 @@ public class DoctorAccount extends AppCompatActivity implements DatePickerDialog
                 imageUri = data.getData();
                 profilePicture.setImageURI(imageUri);
 
-                StorageReference filePath = storageReference.child("doctors").child(email);
+                StorageReference filePath = storageReference.child("doctors").child(user.getUid());
                 filePath.putFile(imageUri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
