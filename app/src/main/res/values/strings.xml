@@ -50,4 +50,8 @@
     <string name="bim">Calculate BMI</string>
     <string name="height">Height</string>
     <string name="Weight">Weight</string>
+    <string name="viewAppointment">view appointment</string>
+    <string name="updadeProfile">Updade Profile</string>
+    <string name="logout">logout</string>
+    <string name="deleteAccount">delete account</string>
 </resources>

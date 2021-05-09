@@ -126,7 +126,7 @@ public class EditDoctor extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(),"Somthing went wrong. Try again.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Something went wrong. Try again.",Toast.LENGTH_LONG).show();
                     }
                 });
     }
