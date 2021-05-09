@@ -59,7 +59,7 @@ public class ChannelList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         appointmentCollection
-                .whereEqualTo("date","21-05-2021")
+                .whereEqualTo("date",date)
                 .whereEqualTo("doctorId",email)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

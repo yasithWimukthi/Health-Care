@@ -128,9 +128,11 @@ public class login extends AppCompatActivity {
                                                     Intent intent = new Intent(getApplicationContext(), home.class);
                                                     intent.putExtra("EMAIL", userEmail.getText().toString().trim());
                                                     intent.putExtra("USER_ID", currentUid);
+                                                    intent.putExtra("USER_NAME", "");
+                                                    intent.putExtra("USER_TYPE", snapshot.getString("userType"));
                                                     startActivity(intent);
 
-                                                    Toast.makeText(getApplicationContext(),snapshot.getString("userId"),Toast.LENGTH_LONG).show();
+                                                    //Toast.makeText(getApplicationContext(),snapshot.getString("userId"),Toast.LENGTH_LONG).show();
                                                 }
 
                                             }

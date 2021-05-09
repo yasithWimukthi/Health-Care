@@ -46,6 +46,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mobile" />
 
+            <TextView
+                android:id="@+id/patient_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

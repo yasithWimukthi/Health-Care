@@ -105,7 +105,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView20"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/doctor_illustration" />
 
         <ImageView
             android:id="@+id/doctor_image_picker"

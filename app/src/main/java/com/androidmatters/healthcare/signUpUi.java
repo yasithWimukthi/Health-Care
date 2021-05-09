@@ -170,9 +170,13 @@ public class signUpUi extends AppCompatActivity {
                                         });
                             }
                             if(userType.equals("Doctor")){
-                                startActivity(new Intent(getApplicationContext(),DoctorSignUp.class));
+                                Intent intent = new Intent(getApplicationContext(), DoctorSignUp.class);
+                                intent.putExtra("EMAIL", emailEditText.getText().toString().trim());
+                                startActivity(intent);
                             }else{
-                                startActivity(new Intent(getApplicationContext(),PatientSignUp.class));
+                                Intent intent = new Intent(getApplicationContext(), PatientSignUp.class);
+                                intent.putExtra("EMAIL", emailEditText.getText().toString().trim());
+                                startActivity(intent);
                             }
 
                         }

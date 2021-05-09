@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidmatters.healthcare.util.CurrentUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,7 +40,7 @@ public class home extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference patientCollection = db.collection("patients");
     private CollectionReference doctorCollection = db.collection("doctors");
-
+    private FirebaseAuth firebaseAuth;
     private String dpPath = "";
 
     @Override
@@ -80,30 +82,38 @@ public class home extends AppCompatActivity {
         Intent intent = getIntent();
         String email = intent.getStringExtra("EMAIL");
         String userId = intent.getStringExtra("USER_ID");
+        String name = intent.getStringExtra("USER_NAME");
+        String user_type = intent.getStringExtra("USER_TYPE");
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         helloText = findViewById(R.id.helloText);
         uploadPrescription =  findViewById(R.id.uploadPrescriprionBtn);
         bmiBtn = findViewById(R.id.bmiBtn);
         callAmbulance = findViewById(R.id.callAmbulanceBtn);
 
+        helloText.setText("Hello " + name.split(" ")[0]);
 
-        if(CurrentUser.getInstance().getUserType().equals("Doctor")){
+        //Toast.makeText(getApplicationContext(),user_type,Toast.LENGTH_LONG).show();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user_type.equals("Doctor")){
             doctorCollection
-                    .whereEqualTo("userId",userId)
+                    .whereEqualTo("userId",user.getUid())
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             if(!value.isEmpty()){
                                 for(QueryDocumentSnapshot snapshot : value){
-                                    helloText.setText("Hello " + snapshot.getString("name").split(" ")[0]);
                                     dpPath = snapshot.getString("profilePicture");
+                                    helloText.setText("Hello " + snapshot.getString("name").split(" ")[0]);
+                                    //Toast.makeText(getApplicationContext(),dpPath,Toast.LENGTH_LONG).show();
                                 }
                             }
                         }
                     });
             }else{
             patientCollection
-                    .whereEqualTo("patientId",userId)
+                    .whereEqualTo("patientId",user.getUid())
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
