@@ -97,8 +97,8 @@
 
         <ImageView
             android:id="@+id/doctor_profile_img"
-            android:layout_width="332dp"
-            android:layout_height="164dp"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"

@@ -61,4 +61,6 @@
     <string name="updadeProfile">Updade Profile</string>
     <string name="logout">logout</string>
     <string name="deleteAccount">delete account</string>
+    <string name="callCovic">Call 1390</string>
+    <string name="callCovid">call 1390</string>
 </resources>
